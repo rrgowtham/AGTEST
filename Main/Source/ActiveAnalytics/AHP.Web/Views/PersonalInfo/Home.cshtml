@@ -1,0 +1,81 @@
+﻿@model AHP.Web.ViewModel.PersonalInfoViewModel
+
+
+@{
+    ViewBag.Title = "Reset Password - Step 1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .validation-summary-errors {
+        color: red;
+    }
+
+    .field-validation-error {
+        color: red;
+    }
+
+    .validation-summary-valid {
+        display: none;
+    }
+
+  
+</style>
+
+<div id="needhelp">
+    <h2 style="text-align:left;">Password Reset Step 1</h2>
+    @using (Html.BeginForm("Home", "PersonalInfo", FormMethod.Post, new { id = "personalInfoForm", enctype = "application/x-www-form-urlencoded" }))
+    {        
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+                <div style="clear:both;width:100%;padding-top:1%;">
+                    <div>
+                        <span>If you are a registered user of this site you can request that your password be reset.
+                            Please complete the questions below to verify your identity before submitting a request to reset your password.</span>
+                    </div>
+                    <div style="float:left;width:420px;padding-top:1%">
+                        <p>
+
+                            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @style = " font-weight:bold;" })
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "loginBox" } })
+                            <span class="field-validation-error">*</span>                            
+                        </p>
+                        <p>
+
+                            @Html.LabelFor(model => model.MonthYear, htmlAttributes: new { @style = "font-weight:bold;" })
+                            @Html.EditorFor(model => model.MonthYear, new { htmlAttributes = new { @class = "loginBox" } })
+                            <span class="field-validation-error">*</span>
+                        </p>
+                        <p>
+
+                            @Html.LabelFor(model => model.ZipCode, htmlAttributes: new { @style = "font-weight:bold;" })
+                            @Html.EditorFor(model => model.ZipCode, new { htmlAttributes = new { @class = "loginBox", Maxlength = 5 } })
+                            <span class="field-validation-error">*</span>
+                        </p>
+                        <span style="color:red;float:left;">* Indicates Required Fields </span>
+                    </div>
+                    <div style="float:left;width:420px;padding-top:1%">
+                        <p>
+                            @Html.LabelFor(model => model.FavTeacher, htmlAttributes: new { @style = "font-weight:bold;" })
+                            @Html.EditorFor(model => model.FavTeacher, new { htmlAttributes = new { @class = "loginBox", Maxlength = 25 } })
+                            <span class="field-validation-error">*</span>
+                        </p>
+                        <p>
+
+                            @Html.LabelFor(model => model.FavPlaceAsChild, htmlAttributes: new { @style = "font-weight:bold;" })
+                            @Html.EditorFor(model => model.FavPlaceAsChild, new { htmlAttributes = new { @class = "loginBox", Maxlength = 25 } })
+                            <span class="field-validation-error">*</span>
+                        </p>
+                        <p>
+                            <span id="validationSummary" style="display:none;color:red;float:left;">Please provide the required information!</span>
+                        </p>
+                        <br />
+                        <p>
+                            <input type="submit" value="Continue" id="personalInfoSubmit" class="btn" style="width:380px;" />
+                        </p>
+                    </div>
+                </div>
+         </div>        
+    }
+</div>
+

@@ -1,0 +1,27 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/report-viewer.css")
+</head>
+<body>
+    <main>
+        @if (ViewBag.Error != null)
+        {
+            @ViewBag.Error
+        }
+        else
+        {
+            <iframe src="@ViewBag.TableauUri"></iframe>
+        }        
+    </main>  
+</body>
+</html>

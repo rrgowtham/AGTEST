@@ -1,0 +1,155 @@
+﻿<div class="alertbox" ng-show="ServerResponse && ServerResponse.Success">
+    <span class="pull-right hand-icon" ng-click="closeErrorBox()">X</span>
+    <strong>
+        Requested action completed successfully
+    </strong>
+</div>
+<div class="alertbox red-bg" ng-show="ServerResponse && !ServerResponse.Success">
+    <span class="pull-right hand-icon" ng-click="closeErrorBox()">X</span>
+    <strong>
+        Requested action could not be completed
+    </strong>
+    <ul ng-show="ServerResponse.Errors && ServerResponse.Errors.length != 0">
+        <li>Please correct the below error and try again</li>
+        <li ng-repeat="error in ServerResponse.Errors">{{error}}</li>
+    </ul>
+</div>
+<div class="pure-g pad-top">
+    <div class="pure-u-1-24">
+    </div>
+    <div class="pure-u-11-12">
+        <form novalidate class="pure-form pure-form-aligned">
+            <div class="pure-control-group">
+                <label>Tableau Server Url</label>
+                <strong><span>{{tableauServerUrl}}</span></strong>
+            </div>
+            <div class="pure-control-group">
+                <label for="viewName">Tableau view name</label>
+                <input class="pure-input-1-3" ng-model="tabView.ViewName" id="viewName" maxlength="100" type="text">
+            </div>
+            <div class="pure-control-group">
+                <label for="url">Url</label>
+                <input id="url" ng-model="tabView.ViewUrl" class="pure-input-1-3" maxlength="400" type="text">
+            </div>
+            <div class="pure-control-group">
+                <label for="isDashboard">Is this Dashboard</label>
+                <input id="isDashboard" ng-model="tabView.IsDashboard" ng-true-value="'Y'" ng-false-value="'N'" type="checkbox">
+            </div>
+            <div class="pure-control-group">
+                <label for="isDisabled">Disabled</label>
+                <input id="isDisabled" ng-model="tabView.Disabled" ng-true-value="'Y'" ng-false-value="'N'" type="checkbox">
+            </div>
+            <div class="pure-control-group">
+                <label for="Description">Description</label>
+                <textarea id="description" ng-paste="$event.preventDefault();" ng-model="tabView.Description" maxlength="400" class="pure-input-1-3"></textarea>
+            </div>
+            <div class="pure-control-group" ng-hide="inEditMode">
+                <button type="button" ng-click="addTableauDetail()" class="pure-button pure-button-primary">Add</button>
+                <button type="reset" ng-click="resetForm()" class="pure-button">Reset</button>
+            </div>
+            <div class="pure-control-group" ng-show="inEditMode">
+                <button type="button" ng-click="updateTableauDetail()" class="pure-button pure-button-primary">Update</button>
+                <button type="button" ng-click="revertUpdateForm()" class="pure-button">Cancel</button>
+            </div>
+        </form>
+    </div>
+    <div class="pure-u-1-24">
+    </div>
+</div>
+<div class="pure-g pad-top">
+    <div class="pure-u-1-24">
+    </div>
+    <div class="pure-u-11-12">
+        <form novalidate class="pure-form pure-form-aligned">
+            <div class="pure-control-group">
+                <label for="searchText">Search</label>
+                <input class="pure-u-3-5" type="text" id="searchText" ng-change="resetExpandedState()" ng-model="searchText" />
+            </div>
+        </form>
+        <div>
+            <table ng-show="getTableauViewsResponse.Success && getTableauViewsResponse.Data && getTableauViewsResponse.Data.length != 0" class="pure-table pure-table-bordered internal-user-list">
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td width="220px">View name</td>
+                        <td width="200px">View Description</td>
+                        <td width="200px">Url</td>
+                        <td width="80px">
+                            Status
+                        </td>
+                        <td width="50px">
+                            Modify
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>                    
+                    <tr ng-repeat-start="view in getTableauViewsResponse.Data | filter:searchText">
+                        <td>
+                            <img class="hand-icon" title="click to hide show users" src="images/updownarrow.png" alt="up down arrow" ng-click="setExpandState(view)" />
+                        </td>
+                        <td>
+                            <span title="{{view.ViewName}}">
+                                {{view.ViewName | limitTo:30 }}
+                            </span>
+                        </td>
+                        <td><span title="{{view.Description}}">{{view.Description | limitTo:120 }}</span></td>
+                        <td>
+                            <span title="{{view.ViewUrl}}">
+                                {{view.ViewUrl | limitTo:20 }}
+                            </span>
+                        </td>
+                        <td>     
+                            <ul>
+                                <li>Disabled:{{view.Disabled == 'Y'?'Yes':'No'}}</li>
+                                <li>Dashboard:{{view.IsDashboard == 'Y'?'Yes':'No'}}</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <button ng-click="populateModifyForm(view)" class="pure-button pure-button-selected" type="button">Modify</button>
+                        </td>
+                    </tr>
+                    <tr ng-repeat-end ng-show="view.IsOpen">
+                        <td colspan="6">
+                            <div class="pure-g">
+                                <div class="pure-u-1-2">
+                                    <h4 class="text-center">Internal Users</h4>
+                                    <div class="user-list-box pad-top">
+                                        <label for="txtInternalUsers">Search Internal users</label><input id="txtInternalUsers" type="text" ng-model="filter.internalUsersFilterText" />
+                                        {{internalUsersFilterText}}
+                                        <div class="user-list">
+                                            <ul>
+                                                <li ng-repeat="user in usersList | filter:{Username:filter.internalUsersFilterText,UserType:'Internal'}">
+                                                    <input type="checkbox" ng-model="user.Selected" />
+                                                    <label>{{user.Username}}</label>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pure-u-1-2">
+                                    <h4 class="text-center">External Users</h4>
+                                    <div class="user-list-box pad-top">
+                                        <label for="txtExternalUsers">Search External users</label><input id="txtExternalUsers" type="text" ng-model="filter.externalUsersFilterText" />
+                                        {{externalUsersFilterText}}
+                                        <div class="user-list">
+                                            <ul>
+                                                <li ng-repeat="user in usersList | filter:{Username:filter.externalUsersFilterText,UserType:'External'}">
+                                                    <input type="checkbox" ng-model="user.Selected" />
+                                                    <label>{{user.Username}}</label>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" ng-click="updateUserAssociation()" class="pure-button pure-button-primary">Update</button>
+                            <button type="button" ng-click="cancelOut()" class="pure-button">Cancel</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="pure-u-1-24">
+    </div>
+</div>

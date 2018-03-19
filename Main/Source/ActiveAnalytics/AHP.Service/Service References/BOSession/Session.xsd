@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:schema xmlns:s0="http://dsws.businessobjects.com/2007/06/01" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://dsws.businessobjects.com/2007/06/01" xmlns:s="http://www.w3.org/2001/XMLSchema">
+  <s:complexType name="DSWSException">
+    <s:sequence>
+      <s:element name="ID" type="s:string" />
+      <s:element name="Message" type="s:string" />
+      <s:element name="Operation" type="s:string" />
+      <s:element minOccurs="0" name="CallStackTrace" nillable="true" type="s:string" />
+      <s:element minOccurs="0" name="CauseException" nillable="true" type="s:string" />
+      <s:element minOccurs="0" name="CauseID" nillable="true" type="s:string" />
+      <s:element minOccurs="0" name="CauseMessage" nillable="true" type="s:string" />
+      <s:element minOccurs="0" name="CauseDetail" nillable="true" type="s:string" />
+    </s:sequence>
+  </s:complexType>
+  <s:complexType name="NameValuePair">
+    <s:sequence />
+    <s:attribute form="unqualified" name="Name" type="s:string" use="optional" />
+    <s:attribute form="unqualified" name="Value" type="s:string" use="optional" />
+  </s:complexType>
+  <s:element name="DSWSException" type="s0:DSWSException" />
+  <s:element name="NameValuePair" type="s0:NameValuePair" />
+</s:schema>

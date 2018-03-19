@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AHP.Web", "AHP.Web\AHP.Web.csproj", "{683E05FB-EFD2-4BE4-BFE0-5FBA1A876047}"
+	ProjectSection(ProjectDependencies) = postProject
+		{88EEAFC1-E0E2-4D94-A2E9-1F80A1DB2031} = {88EEAFC1-E0E2-4D94-A2E9-1F80A1DB2031}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AHP.Web.Api", "AHP.Web.Api\AHP.Web.Api.csproj", "{88EEAFC1-E0E2-4D94-A2E9-1F80A1DB2031}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AHP.Core", "AHP.Core\AHP.Core.csproj", "{052A9BC6-6C03-4F84-96A5-6DF85F630EA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AHP.Service", "AHP.Service\AHP.Service.csproj", "{BF9C6709-90BE-4CEE-B939-DF879A2D050E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AHP.Repository", "AHP.Repository\AHP.Repository.csproj", "{16580AAC-4988-44E3-9E0B-8EA68A37E386}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Demo|Any CPU = Demo|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{683E05FB-EFD2-4BE4-BFE0-5FBA1A876047}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{683E05FB-EFD2-4BE4-BFE0-5FBA1A876047}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{683E05FB-EFD2-4BE4-BFE0-5FBA1A876047}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{683E05FB-EFD2-4BE4-BFE0-5FBA1A876047}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{88EEAFC1-E0E2-4D94-A2E9-1F80A1DB2031}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88EEAFC1-E0E2-4D94-A2E9-1F80A1DB2031}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88EEAFC1-E0E2-4D94-A2E9-1F80A1DB2031}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{88EEAFC1-E0E2-4D94-A2E9-1F80A1DB2031}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{052A9BC6-6C03-4F84-96A5-6DF85F630EA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{052A9BC6-6C03-4F84-96A5-6DF85F630EA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{052A9BC6-6C03-4F84-96A5-6DF85F630EA4}.Demo|Any CPU.ActiveCfg = Release|Any CPU
+		{052A9BC6-6C03-4F84-96A5-6DF85F630EA4}.Demo|Any CPU.Build.0 = Release|Any CPU
+		{BF9C6709-90BE-4CEE-B939-DF879A2D050E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF9C6709-90BE-4CEE-B939-DF879A2D050E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF9C6709-90BE-4CEE-B939-DF879A2D050E}.Demo|Any CPU.ActiveCfg = Release|Any CPU
+		{BF9C6709-90BE-4CEE-B939-DF879A2D050E}.Demo|Any CPU.Build.0 = Release|Any CPU
+		{16580AAC-4988-44E3-9E0B-8EA68A37E386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16580AAC-4988-44E3-9E0B-8EA68A37E386}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16580AAC-4988-44E3-9E0B-8EA68A37E386}.Demo|Any CPU.ActiveCfg = Release|Any CPU
+		{16580AAC-4988-44E3-9E0B-8EA68A37E386}.Demo|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 1
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://cltwprdtfs01:8080/tfs/tfscollection
+		SccLocalPath0 = .
+	EndGlobalSection
+EndGlobal

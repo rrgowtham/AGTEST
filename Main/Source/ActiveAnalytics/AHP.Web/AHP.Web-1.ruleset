@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="SonarQube - Active Analytics Sonar way" ToolsVersion="14.0">
+  <Include Path="..\sonarqube\ahm_active-analytics_devcsharp.ruleset" Action="Default" />
+</RuleSet>

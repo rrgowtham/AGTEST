@@ -1,0 +1,65 @@
+﻿@model AHP.Web.ViewModel.SecurityQuestionsViewModel
+@{
+    ViewBag.Title = "Active Analytics - Setup Security Questions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<SelectListItem> ddlSource = Model.SecurityQuestions.Select(ques => new SelectListItem() { Text = ques, Value = ques }).ToList();
+}
+
+<div class="change_password_panel">
+    @using (Html.BeginForm("SelectQuestions", "SetupUser", FormMethod.Post, htmlAttributes: new { autocomplete = "off" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal padbot">
+            <div class="form-group">              
+                <span>
+                    <strong>Please Select security questions</strong><br />
+                    In the event you forget your password to Active Analytics, you will need to answer these security challenge questions in order to reset your password.
+                </span>
+            </div>
+            <div class="select-question-form">
+                @Html.Raw(HttpUtility.HtmlDecode((Html.ValidationSummary(true) ?? (object)"").ToString()))
+                <div>
+                    @Html.LabelFor(primaryQuestion => primaryQuestion.PrimarySelectedQuestion, "Please select your first security question")
+                    @Html.DropDownListFor(primaryQuestion => primaryQuestion.PrimarySelectedQuestion, ddlSource, "Select a Question")               
+                    @Html.ValidationMessageFor(model => model.PrimarySelectedQuestion)
+                    @Html.LabelFor(primaryQuestion => primaryQuestion.PrimaryProvidedAnswer, "Type the answer to your question")
+                    @Html.PasswordFor(primaryAnswer => primaryAnswer.PrimaryProvidedAnswer)
+                    @Html.ValidationMessageFor(model => model.PrimaryProvidedAnswer)
+                </div>
+                <div>
+                    @Html.LabelFor(secondaryQuestion => secondaryQuestion.SecondarySelectedQuestion, "Please select your second security question")
+                    @Html.DropDownListFor(secondaryQuestion => secondaryQuestion.SecondarySelectedQuestion, ddlSource, "Select a Question")
+                    @Html.ValidationMessageFor(model => model.SecondarySelectedQuestion)
+                    @Html.LabelFor(primaryQuestion => primaryQuestion.SecondaryProvidedAnswer, "Type the answer to your question")
+                    @Html.PasswordFor(secondaryAnswer => secondaryAnswer.SecondaryProvidedAnswer)
+                    @Html.ValidationMessageFor(model => model.SecondaryProvidedAnswer)
+                </div>
+                <div>
+                    @Html.LabelFor(thirdQuestion => thirdQuestion.ThirdSelectedQuestion, "Please select your third security question")
+                    @Html.DropDownListFor(thirdQuestion => thirdQuestion.ThirdSelectedQuestion, ddlSource, "Select a Question")                
+                    @Html.ValidationMessageFor(model => model.ThirdSelectedQuestion)
+                    @Html.LabelFor(thirdAnswer => thirdAnswer.ThirdProvidedAnswer, "Type the answer to your question")
+                    @Html.PasswordFor(thirdAnswer => thirdAnswer.ThirdProvidedAnswer)
+                    @Html.ValidationMessageFor(model => model.ThirdProvidedAnswer)
+                </div>
+                <div>
+                    <p>
+                        <span id="validationSummary" style="display:none;color:red;float:left;">Please provide the required information!</span>
+                    </p>
+                    <p>
+                        <input type="submit" value="Submit" id="btnSetSecurityQuestions" class="btn btn-default" style="width:420px" />
+                    </p>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    }
+</div>
+
+@section ChildScripts
+{
+    <script type="text/javascript">
+        var securityQuestions = "@Json.Encode(Model.SecurityQuestions)"
+    </script>
+    @Scripts.Render("~/Scripts/Views/shared/SelectQuestions.js")
+}

@@ -1,0 +1,13 @@
+﻿@model AHP.Web.ViewModel.UserQuestionsViewmodel
+@{
+    ViewBag.Title = "Account Recovery Step 2 - Active Analytics";
+    Layout = "~/Views/Shared/_Layout.cshtml";  
+}
+<div class="accountrecoverypanel">
+    @using (Html.BeginForm("AnswerSecurityQuestions", "AccountRecovery", FormMethod.Post, htmlAttributes: new { autocomplete = "off" }))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="username" value="@ViewBag.Username" />
+        @Html.Partial("~/Views/Shared/_SelectQuestions.cshtml", Model)
+    }
+</div>

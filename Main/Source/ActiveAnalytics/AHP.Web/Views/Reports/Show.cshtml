@@ -1,0 +1,41 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/report-viewer.css")   
+    @if (System.Web.Configuration.WebConfigurationManager.AppSettings["EnableAppDynamics"].Equals("true", StringComparison.OrdinalIgnoreCase))
+    {
+        <script>window['adrum-start-time']= new Date().getTime(); </script>
+        @Scripts.Render("~/Scripts/adrum.js")
+        <script type="text/javascript">
+        ADRUM.command ("setPageName", "@ViewBag.Title");
+        </script>
+    }
+</head>
+<body>
+    <main>
+        <iframe src="@ViewData["OpenDocumentUri"]" frameborder="0"></iframe>
+    </main>
+    <div class="hide" id="sessionExpiredPanel">
+        <h4>Your session has expired</h4>
+        <p>
+            Please close this browser window. You may also click @Html.ActionLink("here","Logout","Account") to go to login page or wait 5 seconds as we redirect you to login page.
+        </p>
+    </div>
+    <script type="text/javascript">
+        var wakeServerPath = "@Url.Action("IsLoggedOn", "WakeServer")",
+            logoutPath = "@Url.Action("Logout", "Account",new { id = 3 })"
+    </script>
+    @Scripts.Render("~/bundles/noVersionJquery")
+    @Scripts.Render("~/Scripts/pagevisibility.js")
+    @Scripts.Render("~/Scripts/wakeserver.js")   
+</body>
+</html>

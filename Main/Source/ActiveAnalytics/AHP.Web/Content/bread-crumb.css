@@ -1,0 +1,9 @@
+﻿#bread-crumb{
+    position:absolute;
+    top:50%;
+    margin-top:-220px;
+    height:30px;
+    overflow:hidden;
+    display:none;
+    margin-left: 30px;
+}

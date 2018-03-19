@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "An Error Occured";
+}
+<style type="text/css">
+    .error_panel {
+        height: 250px;
+        background: #ffffff;
+        border-radius: 3px 3px;
+        padding: 10px 20px 0 20px;
+    }
+
+        .error_panel h1 {
+            font-size: 20px;
+        }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-2 error_panel">
+            <h1>
+                We are sorry
+            </h1>
+            <p>
+                We could not process your request now. You may try accessing the page again or navigate to @Html.ActionLink("Home Page", "Login", "Default")
+            </p>
+        </div>
+    </div>
+</div>

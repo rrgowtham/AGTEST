@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "User Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/loading-bar.css")
+@Styles.Render("~/Content/pure/forms.css")
+@Styles.Render("~/Content/pure/buttons.css")
+@Styles.Render("~/Content/pure/grids.css")
+@Styles.Render("~/Content/pure/tables.css")
+<div id="userManager">
+    <div class="actionpanel" ng-controller="switchViewController">
+        <ul>
+            <li><a class="pure-button" href="@Url.Action("Index", "UserManager")#!/manageusers">List all users</a></li>
+            <li><a class="pure-button" href="@Url.Action("Index", "UserManager")#!/createusers">Add New User</a></li>            
+            <li><a class="pure-button" href="@Url.Action("Index", "UserManager")#!/tableau">Tableau</a></li>
+            <li><a class="pure-button" href="@Url.Action("Index", "UserManager")#!/manage-internal-users">Internal Users</a></li>            
+        </ul>        
+    </div>
+    <div class="page_content" ng-view>
+
+    </div>
+</div>
+@section ChildScripts{
+    @Scripts.Render("~/bundles/angularCore")
+    <script type="text/javascript" src="@Url.Content("~/Scripts/loading-bar.js")"></script>
+    @Scripts.Render("~/bundles/usermanagerapp")
+    <script type="text/javascript">
+        angular.bootstrap($("#userManager").get(0), ["UserManager"]);
+    </script>
+}

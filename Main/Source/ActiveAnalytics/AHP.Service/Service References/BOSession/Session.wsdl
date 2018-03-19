@@ -1,0 +1,897 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s0="http://session.dsws.businessobjects.com/2007/06/01" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:tns1="http://dsws.businessobjects.com/2007/06/01" targetNamespace="http://session.dsws.businessobjects.com/2007/06/01" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://session.dsws.businessobjects.com/2007/06/01">
+      <s:import schemaLocation="Session?xsd=common.xsd" namespace="http://dsws.businessobjects.com/2007/06/01" />
+      <s:complexType name="Credential">
+        <s:sequence />
+      </s:complexType>
+      <s:complexType name="EnterpriseCredential">
+        <s:complexContent mixed="false">
+          <s:extension base="s0:Credential">
+            <s:sequence />
+            <s:attribute name="Login" type="s:string" use="required" />
+            <s:attribute name="Password" type="s:string" use="optional" />
+            <s:attribute name="Locale" type="s:string" use="optional" />
+            <s:attribute name="TimeZone" type="s:string" use="optional" />
+            <s:attribute name="Domain" type="s:string" use="optional" />
+            <s:attribute name="AuthType" type="s:string" use="optional" />
+            <s:attribute name="ReportedIPAddress" type="s:string" use="optional" />
+            <s:attribute name="ReportedHostName" type="s:string" use="optional" />
+            <s:attribute name="clientType" type="s:string" use="optional" />
+            <s:attribute name="policyID" type="s:string" use="optional" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="LoginOption">
+        <s:sequence>
+          <s:element use="optional" name="Locale" type="s:string" />
+          <s:element use="optional" name="TimeZone" type="s:string" />
+          <s:element use="optional" name="ReportedIPAddress" type="s:string" />
+          <s:element use="optional" name="ReportedHostName" type="s:string" />
+          <s:element use="optional" name="policyID" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UserRight">
+        <s:sequence />
+        <s:attribute name="Name" type="s:string" use="required" />
+        <s:attribute name="Value" type="s:boolean" use="required" />
+      </s:complexType>
+      <s:complexType name="WSResource">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Description" nillable="true" type="s:string" />
+        </s:sequence>
+        <s:attribute name="URL" type="s:string" use="required" />
+        <s:attribute name="WSType" type="s:string" use="required" />
+      </s:complexType>
+      <s:complexType name="SessionInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="UserRights" nillable="true" type="s0:UserRight" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="WSResourceList" nillable="true" type="s0:WSResource" />
+          <s:element minOccurs="0" maxOccurs="1" name="LoginInfo" nillable="true" type="s:string" />
+          <s:any minOccurs="0" maxOccurs="unbounded" namespace="##other" processContents="lax" />
+        </s:sequence>
+        <s:attribute name="Locale" type="s:string" use="required" />
+        <s:attribute name="PVLocale" type="s:string" use="required" />
+        <s:attribute name="MustChangePassword" type="s:boolean" use="required" />
+        <s:attribute name="SessionID" type="s:string" use="required" />
+        <s:attribute name="DefaultToken" type="s:string" use="required" />
+        <s:attribute name="TimeOut" type="s:int" use="required" />
+        <s:attribute name="UserCUID" type="s:string" use="required" />
+        <s:attribute name="SerializedSession" type="s:string" use="required" />
+        <s:attribute name="TimeZone" type="s:string" use="optional" />
+        <s:anyAttribute namespace="##other" />
+      </s:complexType>
+      <s:complexType name="ServerInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="AvailableAuthentications" nillable="true" type="s:string" />
+        </s:sequence>
+        <s:attribute name="Version" type="s:string" use="required" />
+        <s:attribute name="Clustered" type="s:boolean" use="required" />
+      </s:complexType>
+      <s:complexType name="ServerInfoDetails">
+        <s:complexContent mixed="false">
+          <s:extension base="s0:ServerInfo">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="unbounded" name="AuthenticationsDescription" nillable="true" type="s:string" />
+              <s:any minOccurs="0" maxOccurs="unbounded" namespace="##other" processContents="lax" />
+            </s:sequence>
+            <s:anyAttribute namespace="##other" processContents="lax" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="SupportedPVLs">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PVLocale" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="DictionaryType">
+        <s:restriction base="s:string">
+          <s:enumeration value="USER" />
+          <s:enumeration value="SERVER" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="Entry">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Value" nillable="true" type="s:anyType" />
+        </s:sequence>
+        <s:attribute name="Name" type="s:string" use="required" />
+      </s:complexType>
+      <s:element name="getVersion">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="session" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getVersionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="Version" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getServerInfo">
+        <s:complexType />
+      </s:element>
+      <s:element name="getServerInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="ServerInfo" type="s0:ServerInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getServerInfoDetails">
+        <s:complexType />
+      </s:element>
+      <s:element name="getServerInfoDetailsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="ServerInfoDetails" type="s0:ServerInfoDetails" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getSupportedPVLs">
+        <s:complexType />
+      </s:element>
+      <s:element name="getSupportedPVLsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="SupportedPVLocales" type="s0:SupportedPVLs" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="resetSessionTimeOut">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="session" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="resetSessionTimeOutResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="logout">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="session" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="logoutResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="getDictionary">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="session" type="s:string" />
+            <s:element name="dictionary" type="s0:DictionaryType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getDictionaryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="unbounded" name="Dictionary" nillable="true" type="s0:Entry" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="changePassword">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="session" type="s:string" />
+            <s:element name="oldPassword" type="s:string" />
+            <s:element name="newPassword" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="changePasswordResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="setDictionary">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="session" type="s:string" />
+            <s:element name="dictionary" type="s0:DictionaryType" />
+            <s:element minOccurs="0" maxOccurs="unbounded" name="entries" nillable="true" type="s0:Entry" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="setDictionaryResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="login">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="credential" type="s0:Credential" />
+            <s:element minOccurs="0" maxOccurs="1" name="version" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="loginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="SessionInfo" type="s0:SessionInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="loginWithToken">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="loginToken" type="s:string" />
+            <s:element name="locale" type="s:string" />
+            <s:element name="timeZone" type="s:string" />
+            <s:element name="ReportedIPAddress" type="s:string" />
+            <s:element name="ReportedHostName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="version" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="loginWithTokenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="SessionInfo" type="s0:SessionInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="loginWithSerializedSession">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="loginSerializedSession" type="s:string" />
+            <s:element name="locale" type="s:string" />
+            <s:element name="timeZone" type="s:string" />
+            <s:element name="ReportedIPAddress" type="s:string" />
+            <s:element name="ReportedHostName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="version" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="loginWithSerializedSessionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="SessionInfo" type="s0:SessionInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getSessionInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="sessionID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getSessionInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="SessionInfo" type="s0:SessionInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="setPVLocale">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="sessionID" type="s:string" />
+            <s:element name="PVLocale" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="setPVLocaleResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="setSecondaryCredential">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="session" type="s:string" />
+            <s:element name="key" type="s:string" />
+            <s:element name="value" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="setSecondaryCredentialResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="getSecondaryCredential">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="session" type="s:string" />
+            <s:element name="key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getSecondaryCredentialResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="value" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="removeSecondaryCredential">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="session" type="s:string" />
+            <s:element name="key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="removeSecondaryCredentialResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="getSAPAssertionTicket">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="session" type="s:string" />
+            <s:element name="targetSystem" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getSAPAssertionTicketResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="SAPTicket" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="createLogonToken">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="session" type="s:string" />
+            <s:element name="validMinutes" type="s:int" />
+            <s:element name="validNumOfLogons" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="createLogonTokenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="logonToken" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="releaseToken">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="session" type="s:string" />
+            <s:element name="token" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="releaseTokenResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="getSAMLSSOAssertionTicket">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="session" type="s:string" />
+            <s:element name="spHost" type="s:string" />
+            <s:element name="spPort" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getSAMLSSOAssertionTicketResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="SAMLSSOTicket" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </types>
+  <message name="resetSessionTimeOutSoapOut">
+    <part name="parameters" element="s0:resetSessionTimeOutResponse" />
+  </message>
+  <message name="getServerInfoDetailsSoapOut">
+    <part name="parameters" element="s0:getServerInfoDetailsResponse" />
+  </message>
+  <message name="removeSecondaryCredentialSoapIn">
+    <part name="parameters" element="s0:removeSecondaryCredential" />
+  </message>
+  <message name="DSWSException">
+    <part name="fault" element="tns1:DSWSException" />
+  </message>
+  <message name="getSessionInfoOut">
+    <part name="parameters" element="s0:getSessionInfoResponse" />
+  </message>
+  <message name="resetSessionTimeOutSoapIn">
+    <part name="parameters" element="s0:resetSessionTimeOut" />
+  </message>
+  <message name="setPVLocaleIn">
+    <part name="parameters" element="s0:setPVLocale" />
+  </message>
+  <message name="setDictionarySoapOut">
+    <part name="parameters" element="s0:setDictionaryResponse" />
+  </message>
+  <message name="loginSoapOut">
+    <part name="parameters" element="s0:loginResponse" />
+  </message>
+  <message name="getSAMLSSOAssertionTicketSoapOut">
+    <part name="parameters" element="s0:getSAMLSSOAssertionTicketResponse" />
+  </message>
+  <message name="getSAMLSSOAssertionTicketSoapIn">
+    <part name="parameters" element="s0:getSAMLSSOAssertionTicket" />
+  </message>
+  <message name="getServerInfoSoapOut">
+    <part name="parameters" element="s0:getServerInfoResponse" />
+  </message>
+  <message name="getSAPAssertionTicketSoapOut">
+    <part name="parameters" element="s0:getSAPAssertionTicketResponse" />
+  </message>
+  <message name="getVersionSoapIn">
+    <part name="parameters" element="s0:getVersion" />
+  </message>
+  <message name="getServerInfoSoapIn">
+    <part name="parameters" element="s0:getServerInfo" />
+  </message>
+  <message name="releaseTokenSoapOut">
+    <part name="parameters" element="s0:releaseTokenResponse" />
+  </message>
+  <message name="loginWithSerializedSessionIn">
+    <part name="parameters" element="s0:loginWithSerializedSession" />
+  </message>
+  <message name="getSecondaryCredentialSoapOut">
+    <part name="parameters" element="s0:getSecondaryCredentialResponse" />
+  </message>
+  <message name="getDictionarySoapIn">
+    <part name="parameters" element="s0:getDictionary" />
+  </message>
+  <message name="getVersionSoapOut">
+    <part name="parameters" element="s0:getVersionResponse" />
+  </message>
+  <message name="getSAPAssertionTicketSoapIn">
+    <part name="parameters" element="s0:getSAPAssertionTicket" />
+  </message>
+  <message name="getSecondaryCredentialSoapIn">
+    <part name="parameters" element="s0:getSecondaryCredential" />
+  </message>
+  <message name="changePasswordSoapIn">
+    <part name="parameters" element="s0:changePassword" />
+  </message>
+  <message name="changePasswordSoapOut">
+    <part name="parameters" element="s0:changePasswordResponse" />
+  </message>
+  <message name="setSecondaryCredentialSoapIn">
+    <part name="parameters" element="s0:setSecondaryCredential" />
+  </message>
+  <message name="logoutSoapOut">
+    <part name="parameters" element="s0:logoutResponse" />
+  </message>
+  <message name="getSupportedPVLsIn">
+    <part name="parameters" element="s0:getSupportedPVLs" />
+  </message>
+  <message name="loginWithTokenSoapIn">
+    <part name="parameters" element="s0:loginWithToken" />
+  </message>
+  <message name="createLogonTokenSoapIn">
+    <part name="parameters" element="s0:createLogonToken" />
+  </message>
+  <message name="setDictionarySoapIn">
+    <part name="parameters" element="s0:setDictionary" />
+  </message>
+  <message name="loginWithTokenSoapOut">
+    <part name="parameters" element="s0:loginWithTokenResponse" />
+  </message>
+  <message name="createLogonTokenSoapOut">
+    <part name="parameters" element="s0:createLogonTokenResponse" />
+  </message>
+  <message name="setSecondaryCredentialSoapOut">
+    <part name="parameters" element="s0:setSecondaryCredentialResponse" />
+  </message>
+  <message name="removeSecondaryCredentialSoapOut">
+    <part name="parameters" element="s0:removeSecondaryCredentialResponse" />
+  </message>
+  <message name="setPVLocaleOut">
+    <part name="parameters" element="s0:setPVLocaleResponse" />
+  </message>
+  <message name="loginSoapIn">
+    <part name="parameters" element="s0:login" />
+  </message>
+  <message name="logoutSoapIn">
+    <part name="parameters" element="s0:logout" />
+  </message>
+  <message name="loginWithSerializedSessionOut">
+    <part name="parameters" element="s0:loginWithSerializedSessionResponse" />
+  </message>
+  <message name="getServerInfoDetailsSoapIn">
+    <part name="parameters" element="s0:getServerInfoDetails" />
+  </message>
+  <message name="releaseTokenSoapIn">
+    <part name="parameters" element="s0:releaseToken" />
+  </message>
+  <message name="getSessionInfoIn">
+    <part name="parameters" element="s0:getSessionInfo" />
+  </message>
+  <message name="getDictionarySoapOut">
+    <part name="parameters" element="s0:getDictionaryResponse" />
+  </message>
+  <message name="getSupportedPVLsOut">
+    <part name="parameters" element="s0:getSupportedPVLsResponse" />
+  </message>
+  <portType name="SessionPort">
+    <operation name="getServerInfo">
+      <documentation>Get Web Service Provider server info</documentation>
+      <input message="s0:getServerInfoSoapIn" />
+      <output message="s0:getServerInfoSoapOut" />
+      <fault name="DSWSException" message="s0:DSWSException" />
+    </operation>
+    <operation name="getServerInfoDetails">
+      <documentation>Get Web Service Provider detailed server info</documentation>
+      <input message="s0:getServerInfoDetailsSoapIn" />
+      <output message="s0:getServerInfoDetailsSoapOut" />
+      <fault name="DSWSException" message="s0:DSWSException" />
+    </operation>
+    <operation name="getVersion">
+      <documentation>Get Web Service Version</documentation>
+      <input message="s0:getVersionSoapIn" />
+      <output message="s0:getVersionSoapOut" />
+      <fault name="DSWSException" message="s0:DSWSException" />
+    </operation>
+    <operation name="resetSessionTimeOut">
+      <documentation>Reset the session time out</documentation>
+      <input message="s0:resetSessionTimeOutSoapIn" />
+      <output message="s0:resetSessionTimeOutSoapOut" />
+      <fault name="DSWSException" message="s0:DSWSException" />
+    </operation>
+    <operation name="login">
+      <documentation>Log into the Web Services</documentation>
+      <input message="s0:loginSoapIn" />
+      <output message="s0:loginSoapOut" />
+      <fault name="DSWSException" message="s0:DSWSException" />
+    </operation>
+    <operation name="loginWithToken">
+      <documentation>Log into the Web Services</documentation>
+      <input message="s0:loginWithTokenSoapIn" />
+      <output message="s0:loginWithTokenSoapOut" />
+      <fault name="DSWSException" message="s0:DSWSException" />
+    </operation>
+    <operation name="loginWithSerializedSession">
+      <documentation>Log into the Web Services with Serialized Session</documentation>
+      <input message="s0:loginWithSerializedSessionIn" />
+      <output message="s0:loginWithSerializedSessionOut" />
+      <fault name="DSWSException" message="s0:DSWSException" />
+    </operation>
+    <operation name="logout">
+      <documentation>Log out of the Web Services</documentation>
+      <input message="s0:logoutSoapIn" />
+      <output message="s0:logoutSoapOut" />
+      <fault name="DSWSException" message="s0:DSWSException" />
+    </operation>
+    <operation name="changePassword">
+      <documentation>Change user password</documentation>
+      <input message="s0:changePasswordSoapIn" />
+      <output message="s0:changePasswordSoapOut" />
+      <fault name="DSWSException" message="s0:DSWSException" />
+    </operation>
+    <operation name="getDictionary">
+      <documentation>Get a User Dictionary Entry</documentation>
+      <input message="s0:getDictionarySoapIn" />
+      <output message="s0:getDictionarySoapOut" />
+      <fault name="DSWSException" message="s0:DSWSException" />
+    </operation>
+    <operation name="setDictionary">
+      <documentation>Set a User Dictionary Entry</documentation>
+      <input message="s0:setDictionarySoapIn" />
+      <output message="s0:setDictionarySoapOut" />
+      <fault name="DSWSException" message="s0:DSWSException" />
+    </operation>
+    <operation name="getSessionInfo">
+      <documentation>Returns information describing the user's session</documentation>
+      <input message="s0:getSessionInfoIn" />
+      <output message="s0:getSessionInfoOut" />
+      <fault name="DSWSException" message="s0:DSWSException" />
+    </operation>
+    <operation name="setPVLocale">
+      <documentation>Set User Preferred Locale</documentation>
+      <input message="s0:setPVLocaleIn" />
+      <output message="s0:setPVLocaleOut" />
+      <fault name="DSWSException" message="s0:DSWSException" />
+    </operation>
+    <operation name="getSupportedPVLs">
+      <documentation>Get Supported Prefeered Locale List</documentation>
+      <input message="s0:getSupportedPVLsIn" />
+      <output message="s0:getSupportedPVLsOut" />
+      <fault name="DSWSException" message="s0:DSWSException" />
+    </operation>
+    <operation name="setSecondaryCredential">
+      <documentation>Set Secondary Credential for logon user</documentation>
+      <input message="s0:setSecondaryCredentialSoapIn" />
+      <output message="s0:setSecondaryCredentialSoapOut" />
+      <fault name="DSWSException" message="s0:DSWSException" />
+    </operation>
+    <operation name="getSecondaryCredential">
+      <documentation>Get Secondary Credential for logon user</documentation>
+      <input message="s0:getSecondaryCredentialSoapIn" />
+      <output message="s0:getSecondaryCredentialSoapOut" />
+      <fault name="DSWSException" message="s0:DSWSException" />
+    </operation>
+    <operation name="removeSecondaryCredential">
+      <documentation>Remove Secondary Credential for logon user</documentation>
+      <input message="s0:removeSecondaryCredentialSoapIn" />
+      <output message="s0:removeSecondaryCredentialSoapOut" />
+      <fault name="DSWSException" message="s0:DSWSException" />
+    </operation>
+    <operation name="getSAPAssertionTicket">
+      <documentation>Get SAP Assertion Ticket</documentation>
+      <input message="s0:getSAPAssertionTicketSoapIn" />
+      <output message="s0:getSAPAssertionTicketSoapOut" />
+      <fault name="DSWSException" message="s0:DSWSException" />
+    </operation>
+    <operation name="createLogonToken">
+      <documentation>Create Logon Token</documentation>
+      <input message="s0:createLogonTokenSoapIn" />
+      <output message="s0:createLogonTokenSoapOut" />
+      <fault name="DSWSException" message="s0:DSWSException" />
+    </operation>
+    <operation name="releaseToken">
+      <documentation>Release Logon Token</documentation>
+      <input message="s0:releaseTokenSoapIn" />
+      <output message="s0:releaseTokenSoapOut" />
+      <fault name="DSWSException" message="s0:DSWSException" />
+    </operation>
+    <operation name="getSAMLSSOAssertionTicket">
+      <documentation>Get SAML SSO Assertion Ticket</documentation>
+      <input message="s0:getSAMLSSOAssertionTicketSoapIn" />
+      <output message="s0:getSAMLSSOAssertionTicketSoapOut" />
+      <fault name="DSWSException" message="s0:DSWSException" />
+    </operation>
+  </portType>
+  <binding name="SessionBinding" type="s0:SessionPort">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="getServerInfo">
+      <soap:operation soapAction="http://session.dsws.businessobjects.com/2007/06/01/getServerInfo" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="DSWSException">
+        <soap:fault use="literal" name="DSWSException" namespace="" />
+      </fault>
+    </operation>
+    <operation name="getServerInfoDetails">
+      <soap:operation soapAction="http://session.dsws.businessobjects.com/2007/06/01/getServerInfoDetails" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="DSWSException">
+        <soap:fault use="literal" name="DSWSException" namespace="" />
+      </fault>
+    </operation>
+    <operation name="getVersion">
+      <soap:operation soapAction="http://session.dsws.businessobjects.com/2007/06/01/getVersion" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="DSWSException">
+        <soap:fault use="literal" name="DSWSException" namespace="" />
+      </fault>
+    </operation>
+    <operation name="resetSessionTimeOut">
+      <soap:operation soapAction="http://session.dsws.businessobjects.com/2007/06/01/resetSessionTimeOut" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="DSWSException">
+        <soap:fault use="literal" name="DSWSException" namespace="" />
+      </fault>
+    </operation>
+    <operation name="login">
+      <soap:operation soapAction="http://session.dsws.businessobjects.com/2007/06/01/login" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="DSWSException">
+        <soap:fault use="literal" name="DSWSException" namespace="" />
+      </fault>
+    </operation>
+    <operation name="loginWithToken">
+      <soap:operation soapAction="http://session.dsws.businessobjects.com/2007/06/01/loginWithToken" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="DSWSException">
+        <soap:fault use="literal" name="DSWSException" namespace="" />
+      </fault>
+    </operation>
+    <operation name="loginWithSerializedSession">
+      <soap:operation soapAction="http://session.dsws.businessobjects.com/2007/06/01/loginWithSerializedSession" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="DSWSException">
+        <soap:fault use="literal" name="DSWSException" namespace="" />
+      </fault>
+    </operation>
+    <operation name="logout">
+      <soap:operation soapAction="http://session.dsws.businessobjects.com/2007/06/01/logout" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="DSWSException">
+        <soap:fault use="literal" name="DSWSException" namespace="" />
+      </fault>
+    </operation>
+    <operation name="changePassword">
+      <soap:operation soapAction="http://session.dsws.businessobjects.com/2007/06/01/changePassword" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="DSWSException">
+        <soap:fault use="literal" name="DSWSException" namespace="" />
+      </fault>
+    </operation>
+    <operation name="getDictionary">
+      <soap:operation soapAction="http://session.dsws.businessobjects.com/2007/06/01/getDictionary" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="DSWSException">
+        <soap:fault use="literal" name="DSWSException" namespace="" />
+      </fault>
+    </operation>
+    <operation name="setDictionary">
+      <soap:operation soapAction="http://session.dsws.businessobjects.com/2007/06/01/setDictionary" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="DSWSException">
+        <soap:fault use="literal" name="DSWSException" namespace="" />
+      </fault>
+    </operation>
+    <operation name="getSessionInfo">
+      <soap:operation soapAction="http://session.dsws.businessobjects.com/2007/06/01/getSessionInfo" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="DSWSException">
+        <soap:fault use="literal" name="DSWSException" namespace="" />
+      </fault>
+    </operation>
+    <operation name="setPVLocale">
+      <soap:operation soapAction="http://session.dsws.businessobjects.com/2007/06/01/setPVLocale" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="DSWSException">
+        <soap:fault use="literal" name="DSWSException" namespace="" />
+      </fault>
+    </operation>
+    <operation name="getSupportedPVLs">
+      <soap:operation soapAction="http://session.dsws.businessobjects.com/2007/06/01/getSupportedPVLs" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="DSWSException">
+        <soap:fault use="literal" name="DSWSException" namespace="" />
+      </fault>
+    </operation>
+    <operation name="setSecondaryCredential">
+      <soap:operation soapAction="http://session.dsws.businessobjects.com/2007/06/01/setSecondaryCredential" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="DSWSException">
+        <soap:fault use="literal" name="DSWSException" namespace="" />
+      </fault>
+    </operation>
+    <operation name="getSecondaryCredential">
+      <soap:operation soapAction="http://session.dsws.businessobjects.com/2007/06/01/getSecondaryCredential" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="DSWSException">
+        <soap:fault use="literal" name="DSWSException" namespace="" />
+      </fault>
+    </operation>
+    <operation name="removeSecondaryCredential">
+      <soap:operation soapAction="http://session.dsws.businessobjects.com/2007/06/01/removeSecondaryCredential" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="DSWSException">
+        <soap:fault use="literal" name="DSWSException" namespace="" />
+      </fault>
+    </operation>
+    <operation name="getSAPAssertionTicket">
+      <soap:operation soapAction="http://session.dsws.businessobjects.com/2007/06/01/getSAPAssertionTicket" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="DSWSException">
+        <soap:fault use="literal" name="DSWSException" namespace="" />
+      </fault>
+    </operation>
+    <operation name="createLogonToken">
+      <soap:operation soapAction="http://session.dsws.businessobjects.com/2007/06/01/createLogonToken" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="DSWSException">
+        <soap:fault use="literal" name="DSWSException" namespace="" />
+      </fault>
+    </operation>
+    <operation name="releaseToken">
+      <soap:operation soapAction="http://session.dsws.businessobjects.com/2007/06/01/releaseToken" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="DSWSException">
+        <soap:fault use="literal" name="DSWSException" namespace="" />
+      </fault>
+    </operation>
+    <operation name="getSAMLSSOAssertionTicket">
+      <soap:operation soapAction="http://session.dsws.businessobjects.com/2007/06/01/releaseToken" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="DSWSException">
+        <soap:fault use="literal" name="DSWSException" namespace="" />
+      </fault>
+    </operation>
+  </binding>
+  <service name="Session">
+    <documentation>Session Web Service</documentation>
+    <port name="Session" binding="s0:SessionBinding">
+      <soap:address location="http://nycwdevpayer01:8080/dswsbobje/services/Session/" />
+    </port>
+  </service>
+</definitions>

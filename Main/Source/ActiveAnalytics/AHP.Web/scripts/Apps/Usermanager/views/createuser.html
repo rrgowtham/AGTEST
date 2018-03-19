@@ -1,0 +1,77 @@
+﻿<div ng-show="ServerResponse && ServerResponse.Success" class="alertbox">
+    <strong>
+        User creation successfull.
+    </strong>
+</div>
+<div class="pure-g">
+    <div class="pure-u-3-5">
+        <form novalidate class="pure-form pure-form-aligned">
+            <h4>User Information</h4>
+            <hr />
+            <div class="pure-control-group">
+                <label>Username</label>
+                <input class="pure-input-1-3" type="text" ng-model="user.Username" />
+            </div>
+            <div class="pure-control-group">
+                <label>E-mail</label>
+                <input class="pure-input-1-3" type="text" ng-model="user.Email" />
+            </div>
+            <div class="pure-control-group">
+                <label>First name</label>
+                <input class="pure-input-1-3" type="text" ng-model="user.Firstname" />
+            </div>
+            <div class="pure-control-group">
+                <label>Last name</label>
+                <input class="pure-input-1-3" type="text" ng-model="user.Lastname" />
+            </div>
+            <div class="pure-control-group">
+                <label>Supplier Ids</label>
+                <input class="pure-input-1-3" type="text" ng-model="user.SupplierId" /> <span>Specify as comma separated numbers</span>
+            </div>
+            <div class="pure-control-group">
+                <label>
+                    Select Role
+                </label>
+                <select ng-init="user.Role = allowedRoles[0]" ng-model="user.Role">
+                    <option ng-repeat="role in allowedRoles" value="{{role}}">{{role}}</option>
+                </select>
+            </div>
+            <div class="pure-control-group">
+                <label>
+                    Company
+                </label>
+                <input class="pure-input-1-3" type="text" ng-model="user.Company" />
+            </div>
+            <div class="pure-control-group">
+                <h4>Account Recovery Information</h4>
+            </div>
+            <hr />
+            <div class="pure-control-group">
+                <label>
+                    Birth Year
+                </label>
+                <input type="text" class="pure-u-1-12" maxlength="4" ng-model="user.BirthYear" />
+            </div>
+            <div class="pure-control-group">
+                <label>
+                    Birth Month
+                </label>
+                <input type="text" class="pure-u-1-12" maxlength="2" ng-model="user.BirthMonth" />
+            </div>
+            <div class="pure-control-group">
+                <label>
+                    Zip Code
+                </label>
+                <input type="text" class="pure-u-1-4" maxlength="9" ng-model="user.ZipCode" />
+            </div>
+            <input class="pure-button" type="reset" ng-click="resetForm()" value="Reset" />
+            <input class="pure-button pure-button-primary" type="button" ng-click="createUser(user)" value="Create User" />
+        </form>
+    </div>    
+    <div class="pure-u-2-5">
+        <ul class="validation-error-panel" ng-show="ServerResponse && !ServerResponse.Success">
+            <li><strong>Please correct below errors and Try again</strong></li>
+            <li class="field-validation-error" ng-repeat="error in ServerResponse.Errors">{{error}}</li>
+        </ul>
+    </div>
+</div>

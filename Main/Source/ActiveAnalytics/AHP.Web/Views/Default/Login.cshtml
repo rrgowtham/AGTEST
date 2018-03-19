@@ -1,0 +1,39 @@
+﻿@using AHP.Web.Models
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<nav>
+    <ul>
+        <li><a id="lnkLogin" href="#!/login">LOGIN</a></li>
+        <li><a id="lnkWhatsNew" href="#!/whats_new">WHAT'S NEW</a></li>
+    </ul>
+</nav>
+<article id="content">
+    <ul>
+        <li id="login">
+            <span>Welcome to Your Population <br /> at a Glance</span>
+            @Html.Partial("_LoginView", new AHP.Web.Models.User() { UserName = "", Password = "", IsInternalUser = false })
+        </li>
+
+        <li id="whats_new">
+            <span>What's New</span>
+            <div id="dvWhatsnew" class="customScroll">
+                <div>
+                    <p>Please click the links below for updated content from ActiveHealth Management </p>
+                    <ul class="list">
+                        <li>- <a target="_blank" href="~/Docs/AHM_Three_Key_Indicators_Successful_Program.pdf">Three key Indicators of a Successful Employee Well-Being Program</a></li>
+                        <li>- <a target="_blank" href="~/Docs/AHM_3_Tips_Turbo_Charge_Digital-Engagement.pdf">Three Tips to Turbo Charge Digital Engagement</a></li>
+                    </ul>
+                </div>
+            </div>
+            @*<div class="scroll-btns" id="scrollbtns">
+                    <a href="#" data-type="scrollDown"></a>
+                    <a href="#" data-type="scrollUp"></a>
+                </div>*@
+        </li>
+    </ul>
+</article>
+@Scripts.Render("~/scripts/views/shared/login.js")
+    <script>
+        window.location.href = "#!/login";
+    </script>

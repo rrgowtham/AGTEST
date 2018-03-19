@@ -1,0 +1,30 @@
+﻿@using AHP.Web.Helpers
+@{
+    AHP.Web.Controllers.BaseController controller = ViewContext.Controller as AHP.Web.Controllers.BaseController;
+    Identity identity = null;
+    if (controller != null)
+    {
+        identity = controller.Identity;
+    }
+}
+<div class="dashboard-tile">
+    <div style="float:left;margin-right:5px;">
+        <a href="@Url.Action("Show","Reports", new { id = System.Configuration.ConfigurationManager.AppSettings["DashboardId"] })" title="Click to view Report" target="_blank"><img src="~/images/Dashboard_Icon.jpg" width="135" alt="Dashboard" /></a>
+    </div>
+    <div>
+        @Html.ActionLink("Population Dashboard", "Show", "Reports", new { id = System.Configuration.ConfigurationManager.AppSettings["DashboardId"] }, new { title = "Click to view Report", target = "_blank", @style = "font-weight:bold" }) <br />
+        <span>An interactive overview of your population’s Health Opportunities, Engagement, Incentives & Rewards, and Impact & Savings.</span>
+    </div>
+</div>
+@if (identity != null && identity.IsInternalUser)
+{
+    <div class="dashboard-tile">
+        <div style="float:left;margin-right:5px;">
+            <a href="@Url.Action("ShowLaunchpad", "Reports")" title="Click to view tableau dashboard" target="_blank"><img src="~/images/Dashboard_Icon.jpg" width="135" alt="Tableau Launchpad" /></a>
+        </div>
+        <div>
+            @Html.ActionLink("Tableau Dashboard", "ShowLaunchpad", "Reports", null, htmlAttributes: new { title = "Click to view tableau dashboard", target = "_blank", @style = "font-weight:bold" }) <br />
+            <span>Tableau Launchpad is a web portal that hosts interactive web intelligence dashboards.</span>
+        </div>
+    </div>
+}

@@ -1,0 +1,47 @@
+﻿@model AHP.Core.Model.ReportCategory           
+@helper TreeView(AHP.Core.Model.ReportCategory category, string position)
+{
+    string id = "item-" + position;
+    <input type="checkbox" id="@id" /><label for="@id">@category.Name</label>
+if (category.Reports.Count + category.SubCategories.Count > 0)
+{
+        
+            <ul>
+                @for (int i = 0; i < category.SubCategories.Count; i++)
+                {
+                    AHP.Core.Model.ReportCategory subCategory = category.SubCategories[i];
+
+                    <li>
+                        @TreeView(@subCategory, @position + "-" + @i)
+                    </li>
+
+                }
+                @foreach (var report in category.Reports)
+                {
+                    <li>
+                        @Html.ActionLink(@report.Name, "Show", "Reports", new { id = @report.InfoStoreId }, new { title = "Click to view Report", target = "_blank" })
+                    </li>
+                }
+            </ul>
+       
+}
+}
+
+
+<div class="css-treeview">
+    <ul style="width:100%">
+        <li>
+           
+          @for(int i=0; i<Model.ParentCategories.Count; i++)
+          {
+              <ul><li>
+                  @TreeView(Model.ParentCategories[i], "0" + "-" + @i)</li></ul>
+             
+          }
+        </li>
+
+    </ul>
+</div>
+
+
+

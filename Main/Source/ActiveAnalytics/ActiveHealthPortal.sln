@@ -1,0 +1,137 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AHP.Web", "AHP.Web\AHP.Web.csproj", "{683E05FB-EFD2-4BE4-BFE0-5FBA1A876047}"
+	ProjectSection(ProjectDependencies) = postProject
+		{88EEAFC1-E0E2-4D94-A2E9-1F80A1DB2031} = {88EEAFC1-E0E2-4D94-A2E9-1F80A1DB2031}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AHP.Web.Api", "AHP.Web.Api\AHP.Web.Api.csproj", "{88EEAFC1-E0E2-4D94-A2E9-1F80A1DB2031}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AHP.Core", "AHP.Core\AHP.Core.csproj", "{052A9BC6-6C03-4F84-96A5-6DF85F630EA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AHP.Service", "AHP.Service\AHP.Service.csproj", "{BF9C6709-90BE-4CEE-B939-DF879A2D050E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AHP.Repository", "AHP.Repository\AHP.Repository.csproj", "{16580AAC-4988-44E3-9E0B-8EA68A37E386}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Tests", "Unit Tests", "{FE88E2A0-66E4-4F1E-A878-6336B7567E44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AHP.UnitTests", "AHP.UnitTests\AHP.UnitTests.csproj", "{60B20A8C-9A57-493A-9D93-FBD32506BB7C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SonarQube", "SonarQube", "{980EF7F1-A235-405E-BF3D-512C292A9580}"
+	ProjectSection(SolutionItems) = preProject
+		SonarQube\ahm_active-analytics_devCSharp.ruleset = SonarQube\ahm_active-analytics_devCSharp.ruleset
+		SonarQube\SolutionBinding.sqconfig = SonarQube\SolutionBinding.sqconfig
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FC861BEA-73D3-44A8-B329-E9DB2DDF68EE}"
+	ProjectSection(SolutionItems) = preProject
+		CodeCoverageImport.bat = CodeCoverageImport.bat
+		Runner.bat = Runner.bat
+		SonarQube.Analysis.xml = SonarQube.Analysis.xml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AHP.Crypto", "AHP.Crypto\AHP.Crypto.csproj", "{9FB8C9D4-4EB0-467A-83A2-FCDEBD59E023}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Demo|Any CPU = Demo|Any CPU
+		QA|Any CPU = QA|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{683E05FB-EFD2-4BE4-BFE0-5FBA1A876047}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{683E05FB-EFD2-4BE4-BFE0-5FBA1A876047}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{683E05FB-EFD2-4BE4-BFE0-5FBA1A876047}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{683E05FB-EFD2-4BE4-BFE0-5FBA1A876047}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{683E05FB-EFD2-4BE4-BFE0-5FBA1A876047}.QA|Any CPU.ActiveCfg = QA|Any CPU
+		{683E05FB-EFD2-4BE4-BFE0-5FBA1A876047}.QA|Any CPU.Build.0 = QA|Any CPU
+		{683E05FB-EFD2-4BE4-BFE0-5FBA1A876047}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{683E05FB-EFD2-4BE4-BFE0-5FBA1A876047}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88EEAFC1-E0E2-4D94-A2E9-1F80A1DB2031}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88EEAFC1-E0E2-4D94-A2E9-1F80A1DB2031}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88EEAFC1-E0E2-4D94-A2E9-1F80A1DB2031}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{88EEAFC1-E0E2-4D94-A2E9-1F80A1DB2031}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{88EEAFC1-E0E2-4D94-A2E9-1F80A1DB2031}.QA|Any CPU.ActiveCfg = QA|Any CPU
+		{88EEAFC1-E0E2-4D94-A2E9-1F80A1DB2031}.QA|Any CPU.Build.0 = QA|Any CPU
+		{88EEAFC1-E0E2-4D94-A2E9-1F80A1DB2031}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88EEAFC1-E0E2-4D94-A2E9-1F80A1DB2031}.Release|Any CPU.Build.0 = Release|Any CPU
+		{052A9BC6-6C03-4F84-96A5-6DF85F630EA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{052A9BC6-6C03-4F84-96A5-6DF85F630EA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{052A9BC6-6C03-4F84-96A5-6DF85F630EA4}.Demo|Any CPU.ActiveCfg = Release|Any CPU
+		{052A9BC6-6C03-4F84-96A5-6DF85F630EA4}.Demo|Any CPU.Build.0 = Release|Any CPU
+		{052A9BC6-6C03-4F84-96A5-6DF85F630EA4}.QA|Any CPU.ActiveCfg = QA|Any CPU
+		{052A9BC6-6C03-4F84-96A5-6DF85F630EA4}.QA|Any CPU.Build.0 = QA|Any CPU
+		{052A9BC6-6C03-4F84-96A5-6DF85F630EA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{052A9BC6-6C03-4F84-96A5-6DF85F630EA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF9C6709-90BE-4CEE-B939-DF879A2D050E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF9C6709-90BE-4CEE-B939-DF879A2D050E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF9C6709-90BE-4CEE-B939-DF879A2D050E}.Demo|Any CPU.ActiveCfg = Release|Any CPU
+		{BF9C6709-90BE-4CEE-B939-DF879A2D050E}.Demo|Any CPU.Build.0 = Release|Any CPU
+		{BF9C6709-90BE-4CEE-B939-DF879A2D050E}.QA|Any CPU.ActiveCfg = QA|Any CPU
+		{BF9C6709-90BE-4CEE-B939-DF879A2D050E}.QA|Any CPU.Build.0 = QA|Any CPU
+		{BF9C6709-90BE-4CEE-B939-DF879A2D050E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF9C6709-90BE-4CEE-B939-DF879A2D050E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16580AAC-4988-44E3-9E0B-8EA68A37E386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16580AAC-4988-44E3-9E0B-8EA68A37E386}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16580AAC-4988-44E3-9E0B-8EA68A37E386}.Demo|Any CPU.ActiveCfg = Release|Any CPU
+		{16580AAC-4988-44E3-9E0B-8EA68A37E386}.Demo|Any CPU.Build.0 = Release|Any CPU
+		{16580AAC-4988-44E3-9E0B-8EA68A37E386}.QA|Any CPU.ActiveCfg = QA|Any CPU
+		{16580AAC-4988-44E3-9E0B-8EA68A37E386}.QA|Any CPU.Build.0 = QA|Any CPU
+		{16580AAC-4988-44E3-9E0B-8EA68A37E386}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16580AAC-4988-44E3-9E0B-8EA68A37E386}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60B20A8C-9A57-493A-9D93-FBD32506BB7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60B20A8C-9A57-493A-9D93-FBD32506BB7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60B20A8C-9A57-493A-9D93-FBD32506BB7C}.Demo|Any CPU.ActiveCfg = Debug|Any CPU
+		{60B20A8C-9A57-493A-9D93-FBD32506BB7C}.Demo|Any CPU.Build.0 = Debug|Any CPU
+		{60B20A8C-9A57-493A-9D93-FBD32506BB7C}.QA|Any CPU.ActiveCfg = Release|Any CPU
+		{60B20A8C-9A57-493A-9D93-FBD32506BB7C}.QA|Any CPU.Build.0 = Release|Any CPU
+		{60B20A8C-9A57-493A-9D93-FBD32506BB7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60B20A8C-9A57-493A-9D93-FBD32506BB7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FB8C9D4-4EB0-467A-83A2-FCDEBD59E023}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FB8C9D4-4EB0-467A-83A2-FCDEBD59E023}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FB8C9D4-4EB0-467A-83A2-FCDEBD59E023}.Demo|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FB8C9D4-4EB0-467A-83A2-FCDEBD59E023}.Demo|Any CPU.Build.0 = Debug|Any CPU
+		{9FB8C9D4-4EB0-467A-83A2-FCDEBD59E023}.QA|Any CPU.ActiveCfg = Release|Any CPU
+		{9FB8C9D4-4EB0-467A-83A2-FCDEBD59E023}.QA|Any CPU.Build.0 = Release|Any CPU
+		{9FB8C9D4-4EB0-467A-83A2-FCDEBD59E023}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FB8C9D4-4EB0-467A-83A2-FCDEBD59E023}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{60B20A8C-9A57-493A-9D93-FBD32506BB7C} = {FE88E2A0-66E4-4F1E-A878-6336B7567E44}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 8
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://azawvifpmstfs01:8080/tfs/tfscollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = AHP.Core\\AHP.Core.csproj
+		SccProjectName1 = AHP.Core
+		SccLocalPath1 = AHP.Core
+		SccProjectUniqueName2 = AHP.Repository\\AHP.Repository.csproj
+		SccProjectName2 = AHP.Repository
+		SccLocalPath2 = AHP.Repository
+		SccProjectUniqueName3 = AHP.Service\\AHP.Service.csproj
+		SccProjectName3 = AHP.Service
+		SccLocalPath3 = AHP.Service
+		SccProjectUniqueName4 = AHP.Web.Api\\AHP.Web.Api.csproj
+		SccProjectName4 = AHP.Web.Api
+		SccLocalPath4 = AHP.Web.Api
+		SccProjectUniqueName5 = AHP.Web\\AHP.Web.csproj
+		SccProjectName5 = AHP.Web
+		SccLocalPath5 = AHP.Web
+		SccProjectUniqueName6 = AHP.UnitTests\\AHP.UnitTests.csproj
+		SccProjectTopLevelParentUniqueName6 = ActiveHealthPortal.sln
+		SccProjectName6 = AHP.UnitTests
+		SccLocalPath6 = AHP.UnitTests
+		SccProjectUniqueName7 = AHP.Crypto\\AHP.Crypto.csproj
+		SccProjectName7 = AHP.Crypto
+		SccLocalPath7 = AHP.Crypto
+	EndGlobalSection
+EndGlobal

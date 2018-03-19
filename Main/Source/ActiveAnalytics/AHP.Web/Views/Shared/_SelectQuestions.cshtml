@@ -1,0 +1,48 @@
+﻿@model AHP.Web.ViewModel.UserQuestionsViewmodel
+@{
+    List<SelectListItem> ddlSource = Model.SecurityQuestions.Select(ques => new SelectListItem() { Text = ques, Value = ques }).ToList();
+}
+<div class="form-horizontal padbot">
+    <div class="form-group">
+        <span>
+            <strong>Your username was found!</strong><br />
+            Correctly answer your security challenge questions and click submit to get a random password emailed to you
+        </span>
+    </div>
+    <div class="select-question-form">
+        @Html.Raw(HttpUtility.HtmlDecode((Html.ValidationSummary(true) ?? (object)"").ToString()))
+        <div>
+            @Html.LabelFor(primaryQuestion => primaryQuestion.PrimarySelectedQuestion, Model.PrimarySelectedQuestion)
+            @Html.HiddenFor(primaryQuestion => primaryQuestion.PrimarySelectedQuestion)
+            @Html.ValidationMessageFor(model => model.PrimarySelectedQuestion)
+            @Html.LabelFor(primaryQuestion => primaryQuestion.PrimaryProvidedAnswer, "Type the answer to your question")
+            @Html.PasswordFor(primaryAnswer => primaryAnswer.PrimaryProvidedAnswer)
+            @Html.ValidationMessageFor(model => model.PrimaryProvidedAnswer)
+        </div>
+        <div>
+            @Html.LabelFor(secondaryQuestion => secondaryQuestion.SecondarySelectedQuestion, Model.SecondarySelectedQuestion)
+            @Html.HiddenFor(secondaryQuestion => secondaryQuestion.SecondarySelectedQuestion)
+            @Html.ValidationMessageFor(model => model.SecondarySelectedQuestion)
+            @Html.LabelFor(primaryQuestion => primaryQuestion.SecondaryProvidedAnswer, "Type the answer to your question")
+            @Html.PasswordFor(secondaryAnswer => secondaryAnswer.SecondaryProvidedAnswer)
+            @Html.ValidationMessageFor(model => model.SecondaryProvidedAnswer)
+        </div>
+        <div>          
+            @Html.LabelFor(thirdQuestion => thirdQuestion.ThirdSelectedQuestion, Model.ThirdSelectedQuestion)
+            @Html.HiddenFor(thirdQuestion => thirdQuestion.ThirdSelectedQuestion)
+            @Html.ValidationMessageFor(model => model.ThirdSelectedQuestion)
+            @Html.LabelFor(thirdAnswer => thirdAnswer.ThirdProvidedAnswer, "Type the answer to your question")
+            @Html.PasswordFor(thirdAnswer => thirdAnswer.ThirdProvidedAnswer)
+            @Html.ValidationMessageFor(model => model.ThirdProvidedAnswer)
+        </div>
+        <div>
+            <p>
+                <span id="validationSummary" style="display:none;color:red;float:left;">Please provide the required information!</span>
+            </p>
+            <p>
+                <input type="submit" value="Submit" id="btnSetSecurityQuestions" class="btn btn-default" style="width:420px" />
+            </p>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>

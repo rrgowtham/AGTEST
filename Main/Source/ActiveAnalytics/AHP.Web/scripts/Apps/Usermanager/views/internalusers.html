@@ -1,0 +1,70 @@
+﻿<div class="alertbox" ng-show="ServerResponse && ServerResponse.Success">
+    <span class="pull-right hand-icon" ng-click="closeErrorBox()">X</span>
+    <strong>
+        Requested action completed successfully
+    </strong>
+</div>
+<div class="alertbox red-bg" ng-show="ServerResponse && !ServerResponse.Success">
+    <span class="pull-right hand-icon" ng-click="closeErrorBox()">X</span>
+    <strong>
+        Requested action could not be completed
+    </strong>
+    <ul ng-show="ServerResponse.Errors && ServerResponse.Errors.length != 0">
+        <li>Please correct the below error and try again</li>
+        <li ng-repeat="error in ServerResponse.Errors">{{error}}</li>
+    </ul>
+</div>
+<div class="pure-g pad-top">
+    <div class="pure-u-1-24">
+    </div>
+    <div class="pure-u-11-24">
+        <form novalidate class="pure-form pure-form-aligned">
+            <div class="pure-control-group">
+                <label for="searchText">Search</label>
+                <input class="pure-u-3-5" type="text" id="searchText" ng-model="searchText" />
+            </div>
+        </form>
+        <div>
+            <table ng-show="getUsersResponse.Success && getUsersResponse.Data && getUsersResponse.Data.length != 0" class="pure-table pure-table-bordered internal-user-list">
+                <thead>
+                    <tr>
+                        <td width="150px">ActiveHealth ID</td>
+                        <td width="100px">Tableau ID</td>
+                        <td width="80px">Modify</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="user in getUsersResponse.Data | filter:searchText">
+                        <td>{{user.ActiveHealthId}}</td>
+                        <td>{{user.TableauId}}</td>
+                        <td>
+                            <button ng-click="populateModifyForm(user)" class="pure-button pure-button-selected" type="button">Modify</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="pure-u-11-24">
+        <form novalidate class="pure-form pure-form-aligned">
+            <div class="pure-control-group">
+                <label for="ahid">Active Health account name</label>
+                <input maxlength="20" ng-readonly="inEditMode" ng-disabled="isEditMode" class="pure-u-3-5" type="text" id="ahid" ng-model="newUser.ActiveHealthId" />
+            </div>
+            <div class="pure-control-group">
+                <label for="tabid">Tableau account ID</label>
+                <input maxlength="20" class="pure-u-3-5" type="text" id="tabid" ng-model="newUser.TableauId" />
+            </div>
+            <div class="pure-control-group" ng-hide="inEditMode">
+                <button type="button" ng-click="addUserDetail()" class="pure-button pure-button-primary">Add</button>
+                <button type="reset" class="pure-button" ng-click="resetForm()">Reset</button>
+            </div>
+            <div class="pure-control-group" ng-show="inEditMode">
+                <button type="button" ng-click="updateUserDetail()" class="pure-button pure-button-primary">Update</button>
+                <button type="button" ng-click="revertUpdateForm()" class="pure-button">Cancel</button>
+            </div>
+        </form>
+    </div>
+    <div class="pure-u-1-24">
+    </div>    
+</div>

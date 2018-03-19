@@ -1,0 +1,124 @@
+﻿@using AHP.Web.Helpers
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9" />
+    <title>@ViewBag.Title</title>    
+    <link rel="icon" href="~/images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="~/images/favicon.ico" type="image/x-icon" />
+    @Styles.Render("~/Content/customCSS")
+    @Styles.Render("~/Content/style.css")
+    <!-- DO not include custom scrollbar stylesheet in bundle. Thing doesn't work for some reason-->
+    @Styles.Render("~/Content/jquery.mCustomScrollbar.css")    
+    @Scripts.Render("~/bundles/noVersionJquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    <!--[if lt IE 8]>
+      <div class='alc' style=' clear: both; text-align:center; position: relative; z-index:9999;'>
+        <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+          <img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." />
+       </a>
+     </div>
+    <![endif]-->
+    @if (System.Web.Configuration.WebConfigurationManager.AppSettings["EnableAppDynamics"].Equals("true", StringComparison.OrdinalIgnoreCase))
+    {
+        <script>window['adrum-start-time']= new Date().getTime(); </script>
+        @Scripts.Render("~/Scripts/adrum.js")
+        <script type="text/javascript">
+        ADRUM.command ("setPageName", "@ViewBag.Title");
+        </script>
+    }
+</head>
+<body>
+    @{
+        AHP.Web.Controllers.BaseController controller = ViewContext.Controller as AHP.Web.Controllers.BaseController;
+        Identity identity = null;
+        if (controller != null)
+        {
+            identity = controller.Identity;
+        }
+    }
+    <div id="gspinner" class="spinner"></div>
+    <header>
+        <div class="header-main">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a href="@Url.Action("Home", "Customer")" class="logo">
+                    <img src="~/images/logo-small.png" alt="Home">
+                </a>
+            }
+            else
+            {
+                <a href="@Url.Action("Login", "Default")" class="logo">
+                    <img src="~/images/logo-small.png" alt="Home">
+                </a>
+            }            
+            <span class="tag-line">Your Population at a Glance</span>
+            @if (identity != null)
+            {
+                var displayName = string.IsNullOrWhiteSpace(identity.DisplayName) ? identity.UserName : identity.DisplayName;
+                <div id="log-off" class="pull-right">
+                        @if (identity.IsInternalUser)
+                        {
+                            <div>
+                                Welcome!&nbsp;@identity.FirstName&nbsp;@identity.LastName &nbsp;&nbsp;&nbsp;                              
+                            </div>
+                        }
+                        else
+                        {
+                            <div>
+                                Welcome!&nbsp; @displayName &nbsp;&nbsp;&nbsp;
+                                <div class="last_login">
+                                    Last login on&nbsp;@identity.LastLogonDate
+                                </div>
+                            </div>                                                     
+                        }
+                        @if (identity.Role.Equals("admin", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <div class="menu_pull_up">
+                                @Html.ActionLink("User management", "Index", "UserManager") /
+                            </div>
+                        }
+                        @if (!identity.IsInternalUser)
+                        {
+                            <div class="menu_pull_up">
+                                @Html.ActionLink("Change Password", "ChangePassword", "Customer") /
+                            </div>
+                            <div class="menu_pull_up">
+                                @Html.ActionLink("Logoff", "Logout", "Account")
+                            </div>
+                        }
+                        else
+                        {
+                            <div>
+                                @Html.ActionLink("Logoff", "Logout", "Account")
+                            </div>
+                        }
+                </div>               
+            } 
+        </div>
+    </header>
+    <div id="glob">
+        <div class="main">
+            <h1 class="punch-line">
+                Our goal is simple: <br /> Improve the health of your population
+            </h1>
+            @RenderBody()
+        </div>
+        <div id="bgStretch"><img src="~/images/bg-site.jpg" alt="" /></div>
+    </div>
+    <footer>
+        <div id="footer">
+            <div style="text-align:center"><span>@Html.ActionLink("Need Help?", "NeedHelp", "Help") &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="https://www.myactivehealth.com/Portal/MAHFooter/SecurityStatement">Security Statement</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://www.activehealth.com/legal-statement">Terms and Conditions</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://www.activehealth.com/web-privacy-statement">Privacy Policy</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://www.activehealth.com">ActiveHealth Homepage</a></span></div>
+            <pre class="privacy nocolor und" style="text-align:center;">&copy; @DateTime.Today.Year ActiveHealth Management, Inc.</pre>
+        </div>
+    </footer>
+    <script>
+        var appRootPath = "@Url.Content("~")";
+    </script>
+    @Scripts.Render("~/bundles/customScripts")
+    @Scripts.Render("~/scripts/jquery.mCustomScrollbar.js")
+    @RenderSection("ChildScripts",false)    
+</body>
+</html>

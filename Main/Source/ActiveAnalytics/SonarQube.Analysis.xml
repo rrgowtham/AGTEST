@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  This file defines properties which would be understood by the SonarQube Scanner for MSBuild, if not overridden (see below)
+  By default the MSBuild.SonarQube.Scanner.exe picks-up a file named SonarQube.Analysis.xml in the folder it
+  is located (if it exists). It is possible to use another properties file by using the /s:filePath.xml flag
+  
+  The overriding strategy of property values is the following:
+  - A project-specific property defined in the MSBuild *.*proj file (corresponding to a SonarQube module) can override:
+  - A property defined in the command line (/d:propertyName=value) has which can override:
+  - A property defined in the SonarQube.Analysis.xml configuration file [this file] which can override:
+  - A property defined in the SonarQube User Interface at project level which can override:
+  - A property defined in the SonarQube User Interface at global level which can't override anything.
+  
+  Note that the following properties cannot be set through an MSBuild project file or an SonarQube.Analysis.xml file:
+  sonar.projectName, sonar.projectKey, sonar.projectVersion
+  The following flags need to be used to set their value: /n:[SonarQube Project Name] /k:[SonarQube Project Key] /v:[SonarQube Project Version]
+
+-->
+<SonarQubeAnalysisProperties  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
+
+
+  <Property Name="sonar.host.url">http://azauvifbsoqub01.activehealth.loc/</Property>
+  <Property Name="sonar.projectKey">ahm:active-analytics:dev</Property>
+  <!--Authorization-->
+  <Property Name="sonar.login">16773310a1ce77e7b63d4a473bb24decf19d4f59</Property>
+  <!--<Property Name="sonar.password"></Property>-->
+
+
+  <!-- Required only for versions of SonarQube prior to 5.2 -->
+  <!--
+  <Property Name="sonar.jdbc.url">jdbc:jtds:sqlserver://mySqlServer/sonar;instance=SQLEXPRESS;SelectMethod=Cursor</Property>
+  <Property Name="sonar.jdbc.username">sonar</Property>
+  <Property Name="sonar.jdbc.password">sonar</Property>
+  -->
+
+  <!--Project identification-->
+  <Property Name="sonar.projectName">Active Analytics</Property>
+  <Property Name="sonar.projectVersion">dev</Property>
+  <Property Name="sonar.sourceEncoding">UTF-8</Property>
+
+  <!--Info required for Sonar-->
+  <Property Name="sonar.sources">.</Property>
+
+  <!-- Core C# Settings-->
+  <Property Name="sonar.dotnet.visualstudio.solution.file">ActiveHealthPortal.sln</Property>
+  <Property Name="sonar.dotnet.excludeGeneratedCode">true</Property>
+  <Property Name="sonar.dotnet.version">4.5</Property>
+
+  <!--Test Info-->
+  <Property Name="sonar.dotnet.test.assemblies">**/*/AHP.UnitTests.dll;</Property>
+  <Property Name="sonar.dotnet.visualstudio.testProjectPattern">*Tests;*UnitTests;</Property>
+
+  <!--To prevent any issues while analyzing multiple solutions containing projects with similar keys
+  Will be set by default to safe starting at version 2.2: http://jira.codehaus.org/browse/SONARDOTNT-339-->
+  <Property Name="sonar.dotnet.key.generation.strategy">safe</Property>
+
+  <!-- Code coverage reports path -->
+  <Property Name="sonar.cs.vstest.reportsPaths">TestResults\MSTestResults.trx</Property>
+  <Property Name="sonar.cs.vscoveragexml.reportsPaths">TestResults\VisualStudio.coveragexml</Property>
+  
+  <!--Exclusions Settings
+  need to exlude unit tests from analysis-->
+  <Property Name="sonar.exclusions">packages/**,**/*/bin/**/*,**/*/obj/**/*,**/*/jquery*,**/*/modernizr*,**/*/bootstrap*,**/*/respond*,**/*/scripts*</Property>
+  <Property Name="sonar.test.exclusions">**/scripts/*.js,AHP.UnitTests/**/*.cs</Property>
+  <Property Name="sonar.coverage.exclusions">**/scripts/*.js,**/scripts/**,**/App_Start/*.cs,AHP.UnitTests/**/*.cs</Property>
+</SonarQubeAnalysisProperties>

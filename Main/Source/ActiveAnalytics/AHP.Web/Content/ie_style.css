@@ -1,0 +1,7 @@
+footer .soc-ico li a{
+	background-position:0 0;
+}
+
+footer .soc-ico li a:hover{
+	background-position:0 100%;
+}

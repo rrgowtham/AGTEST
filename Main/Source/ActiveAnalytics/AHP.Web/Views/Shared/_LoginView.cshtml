@@ -1,0 +1,48 @@
+﻿@model AHP.Web.Models.User
+
+
+
+<div>
+    <div id="result" class="validation-summary-errors">
+        @{
+            if (ViewBag.Message != null && !string.IsNullOrEmpty(ViewBag.Message.Trim()))
+            {
+                if (ViewBag.Message == "2") //Logout
+                {
+                    <span>You have been logged out, please login again</span>
+                }
+                else if (ViewBag.Message == "3")
+                {
+                    <span>Your session has expired. Please login again!</span>
+                }
+                else
+                {
+                    <span></span>
+                }
+            }
+        }
+        @Html.Raw(HttpUtility.HtmlDecode((Html.ValidationSummary(true) ?? (object)"").ToString()))
+    </div>
+    <div>
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { id = "loginForm", enctype = "application/x-www-form-urlencoded" }))
+        {
+            @Html.AntiForgeryToken()
+            <p>
+                @Html.TextBoxFor(model => model.UserName, new { @placeholder = "Username", @class = "loginBox", autofocus = "true" })
+                @Html.ValidationMessageFor(model => model.UserName, "")
+                <span class="field-validation-error">*</span>
+            </p>
+            <p>
+                @Html.PasswordFor(model => model.Password, new { @placeholder = "Password", @class = "loginBox" })
+                @Html.ValidationMessageFor(model => model.Password, "")
+                <span class="field-validation-error">*</span>
+            </p>
+            <p id="NeedHelpLink">@Html.ActionLink("Forgot Password", "ResetPassword", "AccountRecovery")</p>
+            <p>
+                @Html.EditorFor(model => model.IsInternalUser, new { htmlAttributes = new { @class = "chkbox" } })
+                @Html.LabelFor(model => model.IsInternalUser, htmlAttributes: new { @style = "color:#266093;font-size:16px;font-family:sans-serif" })
+            </p>
+            <p><input type="submit" id="LoginBtn" class="btn" name="LoginBtn" value="Login"></p>
+        }
+    </div>
+</div>

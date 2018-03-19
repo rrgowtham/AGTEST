@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{052A9BC6-6C03-4F84-96A5-6DF85F630EA4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AHP.Core</RootNamespace>
+    <AssemblyName>AHP.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AHP.Core-1.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AHP.Core-1.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'QA|AnyCPU'">
+    <OutputPath>bin\QA\</OutputPath>
+    <CodeAnalysisRuleSet>AHP.Core-1.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClaimTypes.cs" />
+    <Compile Include="DTO\ExternalUserInfo.cs" />
+    <Compile Include="DTO\InternalUserInfo.cs" />
+    <Compile Include="DTO\PasswordResetResponse.cs" />
+    <Compile Include="DTO\TableauViewInfo.cs" />
+    <Compile Include="DTO\TableauViewUserAssociation.cs" />
+    <Compile Include="DTO\UpdateSecurityQuestionsRequest.cs" />
+    <Compile Include="DTO\UserSecurityOption.cs" />
+    <Compile Include="EnumHelper.cs" />
+    <Compile Include="AuditEventType.cs" />
+    <Compile Include="LDAPResponseStatus.cs" />
+    <Compile Include="Logger\ILogger.cs" />
+    <Compile Include="Logger\Log4netLogger.cs" />
+    <Compile Include="Model\BOAuthentication.cs" />
+    <Compile Include="Model\BOPasswordReset.cs" />
+    <Compile Include="Model\BOUserSessionInfo.cs" />
+    <Compile Include="Model\Customer.cs" />
+    <Compile Include="Model\Enums.cs" />
+    <Compile Include="Model\EventAudit.cs" />
+    <Compile Include="Model\IErrorProvider.cs" />
+    <Compile Include="Model\GenericResponse.cs" />
+    <Compile Include="Model\InternalUserTableauInfo.cs" />
+    <Compile Include="Model\LDAPAuthentication.cs" />
+    <Compile Include="Model\LDAPUser.cs" />
+    <Compile Include="Model\PersonalInfoQuestion.cs" />
+    <Compile Include="Model\PredefinedQuestionCategory.cs" />
+    <Compile Include="Model\Report.cs" />
+    <Compile Include="Model\ReportCategory.cs" />
+    <Compile Include="Model\SecurityInfoQuestion.cs" />
+    <Compile Include="Model\TableauViewsForUser.cs" />
+    <Compile Include="Model\TrustedLogonResponse.cs" />
+    <Compile Include="Model\UserCredential.cs" />
+    <Compile Include="Model\UserInfo.cs" />
+    <Compile Include="Model\UserSecurityAnswer.cs" />
+    <Compile Include="Model\UserSetupInfo.cs" />
+    <Compile Include="Model\WorkbookViewInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\IBIRepository.cs" />
+    <Compile Include="Repository\ILDAPAuthenticationRepository.cs" />
+    <Compile Include="Service\EmailDeliveryService.cs" />
+    <Compile Include="Service\IAuthenticationService.cs" />
+    <Compile Include="Service\IBOReportService.cs" />
+    <Compile Include="Service\IEmailSenderService.cs" />
+    <Compile Include="Service\ILDAPAuthenticationService.cs" />
+    <Compile Include="WebRequestResponseStatus.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Validator\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AHP.Core-1.ruleset" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

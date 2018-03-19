@@ -1,0 +1,78 @@
+﻿@model AHP.Web.ViewModel.CustomerViewModel
+
+@{
+    ViewBag.Title = "Need Help";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="needhelp">
+    <h2 style="text-align:left;">Need Help?</h2>
+    @using (Html.BeginForm("NeedHelp", "Help", FormMethod.Post, new { id = "needHelpForm", enctype = "application/x-www-form-urlencoded" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-10" style="width:60%; ">
+                    @Html.DropDownListFor(model => model.SelectedIssueId, @ViewBag.IssuesList as IEnumerable<SelectListItem>, "What do you need help with?", new { @class = "ddlHelp", @onchange= "ChangePwResetMsg(this)" })
+                    <span class="field-validation-error">*</span> <br />
+                    @if (Model.SelectedIssueId == 6)
+                    {                        
+                        ViewBag.Title = "Need Help - Reset My Password";
+                        <span id="pwResetmsg" style="color:red;">
+                        Password reset requests will be handled by AHM Support within 24 business hours.
+                        </span>
+                    }
+                </div>
+            </div>
+            <div style="clear:both;width:100%;padding-top:1%;">
+                <div style="float:left;width:460px;">
+                    <p>
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "loginBox", placeholder = "someone@example.com" } })
+                        <span class="field-validation-error">*</span>
+                        @Html.ValidationMessageFor(model => model.Email)
+                    </p>
+                    <p>
+                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "loginBox", placeholder = "First Name" } })
+                        <span class="field-validation-error">*</span>
+                    </p>
+                    <p>
+                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "loginBox", placeholder = "Last Name" } })
+                        <span class="field-validation-error">*</span>
+                    </p>
+                    <p>
+                        @Html.EditorFor(model => model.Company, new { htmlAttributes = new { @class = "loginBox", placeholder = "Company" } })
+                        <span class="field-validation-error">*</span>
+                    </p>
+                    <p>
+                        @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "loginBox", maxlength = "15", placeholder = "(999)-999-9999", title = "Please enter number in (999)-999-9999 format!" } })
+                        <span class="field-validation-error">*</span>
+                        @Html.ValidationMessageFor(model => model.PhoneNumber)
+                        <br />
+                        <span style="color:red;float:left;">* Indicates Required Fields </span>
+                    </p>
+                </div>
+                <div style="float:left;width:400px;padding-right:1%;">
+                    <p>
+                        <b>Please describe your issue!</b> <span class="field-validation-error">*</span>
+                        @Html.TextAreaFor(model => model.IssueDescription, columns: 58, rows: 12, htmlAttributes: new { @style = "width:400px;", maxlength = "2000" })
+                        @Html.ValidationMessageFor(model => model.IssueDescription)
+                    </p>
+                    <p>
+                        <input type="submit" value="Submit" id="needHelpSubmit" class="btn" style="float:right; width:400px;" />
+                    </p>
+                    <p>
+                        <span id="validationSummary" style="display:none;color:red;float:left;">Please provide the required information!</span>
+                    </p>
+                </div>
+            </div>
+            <div style="padding-top:1%; clear:both;">
+                <p>
+                    If you need immediate assistance for an issue not covered above, please call (800) 491-3464.
+                    Because email may not be secure, submit technical or functional questions or comments only.
+                    Please do not include any Personal Health Information (PHI) in your email.
+                </p>
+            </div>
+        </div>
+    }
+</div>
+

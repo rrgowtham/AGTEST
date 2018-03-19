@@ -1,0 +1,48 @@
+﻿<div class="alertbox red-bg" ng-show="!getUsersResponse.Success">
+    <h4>We are sorry. Error occurred getting list of users. Error info below</h4>
+    <ul>
+        <li ng-repeat="error in getUsersResponse.Errors">
+            {{ error }}
+        </li>
+    </ul>
+</div>
+<div ng-show="getUsersResponse.Success && getUsersResponse.Data.length == 0">
+    <h4>We have no users to display</h4>
+</div>
+<div class="pure-g">
+    <div class="pure-u-1-24"></div>
+    <div class="pure-u-23-24">
+        <table ng-show="getUsersResponse.Success && getUsersResponse.Data && getUsersResponse.Data.length != 0" class="pure-table pure-table-bordered">
+            <thead>
+                <tr>
+                    <td>Company</td>
+                    <td>Username</td>
+                    <td>First name</td>
+                    <td>Last name</td>
+                    <td>Linked Suppliers</td>
+                    <td>Email Address</td>
+                    <td>
+                        More Info
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in getUsersResponse.Data">
+                    <td>{{user.Company}}</td>
+                    <td>{{user.Username}}</td>
+                    <td>{{user.Firstname}}</td>
+                    <td>{{user.Lastname}}</td>
+                    <td>
+                        <span ng-repeat="supp in user.SupplierId.split(',')">
+                            {{$first ? '' : $last ? ',' : ', '}}{{supp}}
+                        </span>
+                    </td>
+                    <td>{{user.Email}}</td>
+                    <td>
+                        <a ng-href="#!/user/{{user.Username}}" class="pure-button pure-button-selected">more info..</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

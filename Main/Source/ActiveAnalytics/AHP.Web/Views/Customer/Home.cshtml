@@ -1,0 +1,240 @@
+﻿@model AHP.Web.ViewModel.ReportViewModel
+@using AHP.Web.Models
+@using AHP.Web.ViewModel
+@using AHP.Core.Model
+
+@{
+    ViewBag.Title = "Customer Dashboard | ActiveHealth Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var tableauViews = ViewBag.TableauViews as List<AHP.Web.ViewModel.TableauWorkbookViewModel>;
+    var tableauDashboards = ViewBag.TableauDashboards as List<AHP.Web.ViewModel.TableauWorkbookViewModel>;
+}
+<script src="~/scripts/views/shared/login.js"></script>
+<style type="text/css">
+    #faqs p{
+    text-align:justify;
+}
+</style>
+<nav>
+    <ul>
+        <li><a href="#!/dashboards" style="background:rgba(130,188,0,0.7)">View My Dashboards</a></li>
+        <li><a href="#!/reports" style="background:#0069a6">Reports</a></li>
+        <li><a href="#!/whats_new" style="background:rgb(179,54,148)">What's New?</a></li>
+        <li><a href="#!/faq" style="background:rgb(233,164,12)">FAQs</a></li>
+        <li><a href="#!/tableau" style="background:rgb(57,147,51)">Tableau</a></li>
+    </ul>
+</nav>
+<article id="content">
+    <ul>
+        <li id="whats_new" class="active">
+            <span>What's New</span>
+            <div id="dvWhatsnew" class="customScroll">
+                <div>
+                    <p>Please click the links below for updated content from ActiveHealth Management </p>
+                    <ul class="list">
+                        <li>- <a target="_blank" href="~/Docs/AHM_Three_Key_Indicators_Successful_Program.pdf">Three key Indicators of a Successful Employee Well-Being Program</a></li>
+                        <li>- <a target="_blank" href="~/Docs/AHM_3_Tips_Turbo_Charge_Digital-Engagement.pdf">Three Tips to Turbo Charge Digital Engagement</a></li>
+                        <li>
+                            - <a target="_blank" href="~/Docs/AHM_Q42016_Product_Highlights.pdf">Winter 2016 Product Release Highlights</a>
+                        </li>
+                        <li>- <a target="_blank" href="~/Docs/AHM_Q32016_Product_Highlights.pdf">Fall 2016 Product Release Highlights</a></li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+        <li id="dashboards">
+            <span>Dashboards</span>
+            <div id="dvDashboards" class="customScroll">
+                <div>
+                    @if (Model.Category != null)
+                    {
+                        if (Model.Category.ParentCategories.Count > 0)
+                        {
+                            @Html.Partial("_UserDashboard")
+                        }
+                        else
+                        {
+                            if (ViewBag.IsInternalUser)
+                            {
+                                <div>
+                                    No reports have been associated with your account. Please contact the Active Analytics product manager.
+                                </div>
+                            }
+                            else
+                            {
+                                <div>
+                                    No dashboards have been associated with your account. Please contact your account manager.
+                                </div>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <div>
+                            No reports have been associated with your account. Please contact the Active Analytics product manager.
+                        </div>
+                    }
+                    @if (tableauDashboards != null && tableauDashboards.Count != 0)
+                    {
+                        foreach (AHP.Web.ViewModel.TableauWorkbookViewModel workbookView in tableauDashboards)
+                        {
+                            <div class="dashboard-tile">
+                                <div style="float:left;margin-right:5px;">
+                                    <a href="@Url.Action("ShowLaunchpad","Reports",new { id = workbookView.ViewId })" title="Click to view @workbookView.ShortName"><img src="~/images/Dashboard_Icon.jpg" width="135" alt="@workbookView.ViewName" /></a>
+                                    @*@Url.Action("ShowLaunchpad", "Reports", new { id = workbookView.ViewId })*@
+                                </div>
+                                <div>
+                                    @Html.ActionLink(workbookView.ShortName, "ShowLaunchpad", "Reports", new { id = workbookView.ViewId }, htmlAttributes: new { title = @workbookView.ViewName, target = "_blank", @style = "font-weight:bold" }) <br />
+                                    <span title="@workbookView.Description">@workbookView.ShortDescription</span>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div>
+                            No tableau reports have been associated with your account. Please contact the Active analytics product manager.
+                        </div>
+                    }
+                </div>
+            </div>
+        </li>
+        <li id="reports">
+            <span style="font-size:30px;font-family:sans-serif;color:#0069A6;line-height:34px;">Reports</span>
+            <div id="dvreports">
+                @if (Model.Category != null)
+                {
+                    if (Model.Category.ParentCategories.Count > 0)
+                    {
+                        @Html.Partial("_UserReports", @Model.Category)}
+                    else
+                    {
+                        if (ViewBag.IsInternalUser)
+                        {
+                            <div>
+                                No reports have been associated with your account. Please contact the Active Analytics product manager.
+                            </div>
+                        }
+                        else
+                        {
+                            <div>
+                                No reports have been associated with your account. Please contact your account manager.
+                            </div>
+                        }
+                    }
+                }
+                else
+                {
+                    <div>
+                        No reports have been associated with your account. Please contact the Active Analytics product manager.
+                    </div>
+                }
+            </div>
+        </li>
+        <li id="faq">
+            <span>Frequently Asked Questions</span>
+            <div id="faqs" class="customScroll">
+                <div>
+                    <p>
+                        <strong>What is Active Analytics?</strong><br />
+                        The AHM Reporting Portal (called Active Analytics) is an on-line, secure, on-demand reporting portal that supports 24/7 access to two foundation methods of sharing information about a client’s population being supported by Active Health: Dashboards that are updated routinely to support the time frames required by the metrics; and Reports (both standard and custom).
+                    </p>
+                    <p>
+                        <strong>How is it accessed?</strong><br />
+                        Active Analytics is accessed via the AHM Reporting Portal via any current version web browser. It is an SSL connection to a secure website (HTTPS) accessed with a username and password.
+                    </p>
+                    <p>
+                        <strong>Who can use it?</strong><br />
+                        The main account representative at our external customers (HR Benefits administrators) is the primary user of the Active Analytics Portal. Secondary users are AHM internal personnel (Account Managers, Informatics and Product team).
+                    </p>
+                    <p>
+                        <strong>What kind of reports can be accessed via Active Analytics?</strong><br />
+                        Two types of reports can be accessed, Dashboards and Reports. The Dashboards and Reports allow a client to view high level metrics for the full client population or a subset of the population based on attributes about a member (e.g. Supplier ID, location, Member type etc) as defined by the client during the implementation phase.  The dashboards also allow the user to select time frames such as calendar year to date or a rolling 12 month view. The number of dashboards and report available via the portal will grow over time as more reports are migrated to the portal and new dashboards are developed.
+                    </p>
+                    <p>
+                        <strong>What kind of metrics are in the Dashboards and Reports?</strong><br />
+                        The metrics in the dashboards and reports tell the complete journey for a Member including CareEngine analytics on the health status of the population, Engagement metrics on how AHM engages members in Care Management programs and also Impact and Savings.
+                    </p>
+                    <p>
+                        <strong>Can I compare metrics in the Population Dashboard with other reports?</strong><br />
+                        Contact your Informatics Consultant or Account Manager for information how to compare metrics. Active Analytics product team has completed an analysis and comparison of metrics to provide comparison.
+                    </p>
+                    <p>
+                        <strong>Can I maximize the view of the dashboards?</strong><br />
+                        Pressing the F11 key on your keyboard will maximize the browser window. Pressing F11 again restores it to normal view. In addition, on the lower toolbar of the dashboards clicking the Quick Display Mode button will also maximize the display.
+                    </p>
+                    <p>
+                        <strong>Can I view for multiple Suppliers (Company Segments) in my dashboard?</strong><br />
+                        You can view data for Suppliers and Aggregates that already exist. If you need a new aggregation please contact your Account Manager.
+                    </p>
+                    <p>
+                        <strong>Can I compare my data to other companies?</strong><br />
+                        AHM is able to give context to the metrics shown by offering anonymous peer benchmark comparisons.  For example, if the client is a from the industry segment “Manufacturing,” then one can compare how your population is performing compared to a pooled average of anonymous peers in the same industry sector.  For measures that have national benchmarks (such as clinical quality measures), the national benchmarks are available.
+                        This allows the client to see how their populations are engaging compared to other similar peers; this powerful peer comparison allows AHM expert leaders to consult with clients to get the optimal outcomes for all product suits.
+                    </p>
+                    <p>
+                        <strong>Can I export reports?</strong><br />
+                        Dashboards and Reports can be exported as PDFs or Excel for easy sharing.
+                    </p>
+                    <p>
+                        <strong>Why am I not able to print?</strong><br />
+                        Ensure your printer is installed and performing properly. Some reports have printing disabled for data protection purposes.
+                    </p>
+                    <p>
+                        <strong>Can I export reports?</strong><br />
+                        Dashboards and Reports can be exported as PDFs or Excel for easy sharing.
+                    </p>
+                    <p>
+                        <strong>How current is the data in my reports?</strong><br />
+                        Data is refreshed on a continual basis by ActiveHealth Management. The refresh frequency of a report can be determined when running the report.
+                    </p>
+                    <p>
+                        <strong>Does it replace DART?</strong><br />
+                        HDMS’s DART product is a claims database to allow one to slice and dice claims data in hundreds of ways; ideal for a large company who has data analysts use to working in claims data or hires a claims data analyst.  DART is designed to look up every conceivable aggregation on a claim.
+                    </p>
+                    <p>
+                        <strong>What should I do if the name on the welcome page is not my name?</strong><br />
+                        Please sign out of the web portal and sign in again. If the incorrect name remains on your sign in screen please contact technical support by Email, or at (800) 491-3464.
+                    </p>
+                    <p>
+                        <strong>What should I do if I forgot my password?</strong><br />
+                        If you cannot remember your password, click on the @Html.ActionLink("Forgot Password?", "ResetPassword", "AccountRecovery") link on the Sign in page and follow the instructions.
+                    </p>
+                    <p>
+                        <strong>What if I find an error in a report?</strong><br />
+                        Please contact technical support at (800) 491-3464.
+                    </p>
+                </div>
+            </div>
+        </li>
+        <li id="tableau">
+            <span>Tableau Visualizations</span>
+            <div id="tableauDashboards" class="customScroll">
+                <div>
+                    @if (tableauViews != null && tableauViews.Count != 0)
+                    {
+                        foreach (AHP.Web.ViewModel.TableauWorkbookViewModel workbookView in tableauViews)
+                        {
+                            <div class="dashboard-tile">
+                                <div style="float:left;margin-right:5px;">
+                                    <a href="@Url.Action("ShowLaunchpad","Reports",new { id = workbookView.ViewId })" title="Click to view @workbookView.ShortName"><img src="~/images/Dashboard_Icon.jpg" width="135" alt="@workbookView.ViewName" /></a>
+                                    @*@Url.Action("ShowLaunchpad", "Reports", new { id = workbookView.ViewId })*@
+                                </div>
+                                <div>
+                                    @Html.ActionLink(workbookView.ShortName, "ShowLaunchpad", "Reports", new { id = workbookView.ViewId }, htmlAttributes: new { title = @workbookView.ViewName, target = "_blank", @style = "font-weight:bold" }) <br />
+                                    <span title="@workbookView.Description">@workbookView.ShortDescription</span>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div>
+                            No tableau reports have been associated with your account. Please contact the Active analytics product manager.
+                        </div>
+                    }                    
+                </div>
+            </div>
+        </li>
+    </ul>
+</article>

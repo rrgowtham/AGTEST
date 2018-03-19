@@ -1,0 +1,185 @@
+﻿<div ng-cloak ng-show="operationSucceeded" class="alertbox">
+    <h4>Request operation was successful.</h4>
+</div>
+<div ng-cloak ng-show="operationSucceeded == false" class="field-validation-error">
+    <h4>An error occurred. Please try again</h4>
+</div>
+<div class="alertbox" ng-show="ServerResponse && ServerResponse.Success">
+    <span class="pull-right hand-icon" ng-click="closeErrorBox()">X</span>
+    <strong>
+        Requested action completed successfully
+    </strong>
+</div>
+<div class="alertbox red-bg" ng-show="ServerResponse && !ServerResponse.Success">
+    <span class="pull-right hand-icon" ng-click="closeErrorBox()">X</span>
+    <strong>
+        Requested action could not be completed
+    </strong>
+    <ul ng-show="ServerResponse.Errors && ServerResponse.Errors.length != 0">
+        <li>Please correct the below error and try again</li>
+        <li ng-repeat="error in ServerResponse.Errors">{{error}}</li>
+    </ul>
+</div>
+<div ng-cloak ng-show="!inEditMode && userDetail.Success">
+    <p>
+        <div class="pure-g">
+            <div class="pure-u-1-24"></div>
+            <div class="pure-u-23-24">
+                <h1>{{userDetail.Data.Lastname}}, {{userDetail.Data.Firstname}}</h1>
+                <hr />
+                <div class="pure-g">
+                    <div class="pure-u-2-5">
+                        <div>
+                            <strong>Username</strong> : {{userDetail.Data.Username}}
+                        </div>
+                        <div>
+                            <strong>Company</strong> : {{userDetail.Data.Company}}
+                        </div>
+                        <div>
+                            <strong>Email-Id</strong> : {{userDetail.Data.Email}}
+                        </div>
+                        <div>
+                            <strong>Role</strong> : {{userDetail.Data.Role}}
+                        </div>
+                        <div>
+                            <strong>Supplier's Linked</strong> : 
+                            <span ng-repeat="supp in userDetail.Data.SupplierId.split(',')">
+                                {{$first ? '' : $last ? ',' : ', '}}{{supp}}
+                            </span>
+                        </div>
+                        <div>
+                            <ul>
+                                <li><strong>Enforce password Change</strong> : {{userDetail.Data.ChangePasswordOnLogon ? "Yes":"No"}}</li>
+                                <li><strong>Invalid Password Attempts</strong> : {{userDetail.Data.InvalidLogonAttemptCount}}</li>
+                                <li>
+                                    <strong>Is Account Active</strong>:{{userDetail.Data.IsActive ?"Yes":"No"}}
+                                </li>
+                                <li><strong>Account Locked</strong> : {{userDetail.Data.IsLocked ? "Yes":"No"}}</li>
+                                <li>(User account's must be unlocked to reset password)</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul>
+                                <li><strong>Created By</strong> : {{userDetail.Data.CreatedBy}}, <strong>Created Date</strong> : {{userDetail.Data.CreatedDate}}</li>
+                                <li><strong>Last Login Date</strong> : {{userDetail.Data.LastLogonDate}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="pure-u-3-5 user_actions_panel">
+                        <div ng-show="!userDetail.Data.IsEmailActivated">
+                            <button type="button" ng-disabled="activityInProgress" class="pure-button pure-button-primary" ng-click="activateEmail()">Activate Email</button>
+                            <strong>Info:</strong> This user hasn't received a welcome email or we were unable to send welcome email to provided email address.
+                        </div>
+                        <div ng-show="userDetail.Data.IsEmailActivated && !userDetail.Data.IsLocked">
+                            <button type="button" ng-disabled="activityInProgress" class="pure-button pure-button-primary" ng-click="resetPassword()">Reset Password</button>
+                            <strong>Info:</strong> Email will be sent to the user with random password.
+                        </div>
+                        <div>
+                            <button ng-disabled="activityInProgress" ng-show="userDetail.Data.IsActive" type="button" class="pure-button pure-button-primary" ng-click="deactivateAccount()">Deactivate Account</button>
+                            <button ng-disabled="activityInProgress" ng-show="!userDetail.Data.IsActive" type="button" class="pure-button pure-button-primary" ng-click="activateAccount()">Activate Account</button>
+                            <strong>Info:</strong> User will not be able to logon or reset his password unless account is activated
+                        </div>
+                        <div>
+                            <button ng-disabled="activityInProgress" ng-show="userDetail.Data.IsLocked" type="button" class="pure-button pure-button-primary" ng-click="unlockAccount()">Unlock Account</button>
+                            <button ng-disabled="activityInProgress" ng-show="!userDetail.Data.IsLocked" type="button" class="pure-button pure-button-primary" ng-click="lockAccount()">Lock Account</button>
+                            <strong>Info:</strong> User account will be locked after 3 invalid logon attempts
+                        </div>
+
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <h4>Account Recovery Information</h4>
+                    </div>
+                    <hr />
+                    <div>
+                        <ul>
+                            <li><strong>Birth Month</strong> : {{userDetail.Data.BirthMonth}}</li>
+                            <li><strong>Birth Year</strong> : {{userDetail.Data.BirthYear}}</li>
+                            <li><strong>Zip Code</strong> : {{userDetail.Data.ZipCode}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="edit_button_pane">
+                    <button ng-disabled="activityInProgress" type="button" ng-click="openEditMode()" class="pure-button pure-button-primary">Edit</button>
+                    <a class="pure-button" href="#!/manageusers">Go Back</a>
+                </div>
+            </div>
+        </div>
+</div>
+<div ng-cloak ng-show="inEditMode">    
+    <div class="pure-g">
+        <div class="pure-u-1-24"></div>
+        <div class="pure-u-17-24">
+            <form novalidate class="pure-form pure-form-aligned">
+                <fieldset>
+                    <h4>User Information</h4>
+                    <hr />
+                    <div class="pure-control-group">
+                        <label>Username</label>
+                        <input readonly class="pure-input-1-3" type="text" ng-model="editDetails.Username" />
+                    </div>
+                    <div class="pure-control-group">
+                        <label>E-mail</label>
+                        <input class="pure-input-1-3" type="text" ng-model="editDetails.Email" />
+                    </div>
+                    <div class="pure-control-group">
+                        <label>First name</label>
+                        <input class="pure-input-1-3" type="text" ng-model="editDetails.Firstname" />
+                    </div>
+                    <div class="pure-control-group">
+                        <label>Last name</label>
+                        <input class="pure-input-1-3" type="text" ng-model="editDetails.Lastname" />
+                    </div>
+                    <div class="pure-control-group">
+                        <label>Supplier Ids</label>
+                        <input class="pure-input-1-3" type="text" ng-model="editDetails.SupplierId" /> <span>Specify as comma separated numbers</span>
+                    </div>
+                    <div class="pure-control-group">
+                        <label>
+                            Select Role
+                        </label>
+                        <select ng-init="user.Role = allowedRoles[0]" ng-model="editDetails.Role">
+                            <option ng-repeat="role in allowedRoles" value="{{role}}">{{role}}</option>
+                        </select>
+                    </div>
+                    <div class="pure-control-group">
+                        <label>
+                            Company
+                        </label>
+                        <input class="pure-input-1-3" type="text" ng-model="editDetails.Company" />
+                    </div>
+                    <div class="pure-controls">
+                        <label for="aligned-cb" class="pure-checkbox">
+                            <input id="aligned-cb" type="checkbox" ng-model="editDetails.ChangePasswordOnLogon" ng-checked="editDetails.ChangePasswordOnLogon"> Mandate user to change password on next logon
+                        </label>
+                    </div>
+                    <div class="pure-control-group">
+                        <h4>Account Recovery Information</h4>
+                    </div>
+                    <hr />
+                    <div class="pure-control-group">
+                        <label>
+                            Birth Year
+                        </label>
+                        <input type="text" class="pure-u-1-12" ng-model="editDetails.BirthYear" />
+                    </div>
+                    <div class="pure-control-group">
+                        <label>
+                            Birth Month
+                        </label>
+                        <input type="text" class="pure-u-1-12" ng-model="editDetails.BirthMonth" />
+                    </div>
+                    <div class="pure-control-group">
+                        <label>
+                            Zip Code
+                        </label>
+                        <input type="text" class="pure-u-1-4" ng-model="editDetails.ZipCode" />
+                    </div>
+                    <input class="pure-button" type="button" ng-click="closeEditMode()" value="Go Back" />
+                    <input class="pure-button pure-button-primary" type="button" ng-click="updateUser()" value="Update User" />
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
